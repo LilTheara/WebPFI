@@ -224,7 +224,6 @@
     <Content Include="App_Data\Teachers.json" />
     <Content Include="App_Data\UnverifiedEmails.json" />
     <Content Include="App_Data\Users.json" />
-    <Content Include="App_Data\UsersAzure.json" />
     <None Include="packages.config" />
     <Content Include="Views\Shared\_header.cshtml" />
     <Content Include="Views\Accounts\Login.cshtml" />
