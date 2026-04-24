@@ -86,5 +86,38 @@
 		"Notify": true,
 		"Avatar": "/App_Assets/Users/a85fbd9a-5340-4053-a4c5-c7d491df7afe.jpeg",
 		"Id": 9
+	},
+	{
+		"Name": "Admin",
+		"Email": "admin@app.net",
+		"Password": "2IGgbaYCTj7rEg3zjTo4U0Rt/TRMl/0j6t2CzXhgoWY=TqNn/ph3eYp7XWUsVE68BUKlROk=",
+		"Access": 3,
+		"Blocked": false,
+		"Verified": true,
+		"Notify": true,
+		"Avatar": "/App_Assets/Users/3b8cc315-9869-4eeb-acb0-9f539b33758a.jpeg",
+		"Id": 10
+	},
+	{
+		"Name": "Super",
+		"Email": "super@app.net",
+		"Password": "q8+LYI2ls4AcW6LAAmt0P6hwJZ1YWPvaiXfrMnftu6Y=eF5F3WtelAXIdkwEd6gXvMCOamI=",
+		"Access": 2,
+		"Blocked": false,
+		"Verified": true,
+		"Notify": true,
+		"Avatar": "/App_Assets/Users/no_avatar.png",
+		"Id": 11
+	},
+	{
+		"Name": "User",
+		"Email": "user@app.net",
+		"Password": "vMjBzT1/9aQzalEsJmymTYmJEaA37k4G4J1XbUXE/g0=T7R8kzT52HYwlzF7FH8zxwhFonM=",
+		"Access": 1,
+		"Blocked": false,
+		"Verified": true,
+		"Notify": true,
+		"Avatar": "/App_Assets/Users/no_avatar.png",
+		"Id": 12
 	}
 ]

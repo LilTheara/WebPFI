@@ -5,7 +5,8 @@
         <div class="@avatarClass" style="background: url(@user.Avatar)"></div>
         <div class="ellipsis">@user.Name</div>
     </div>
-}@helper ImageLink(string controller, string action, string imageUrl, string imageClass, string title)
+}
+@helper ImageLink(string controller, string action, string imageUrl, string imageClass, string title)
 {
     var Url = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
     <a href="@Url.Action(action, controller)">

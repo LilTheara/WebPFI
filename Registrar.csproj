@@ -110,7 +110,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccessControl.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NotificationsController.cs" />
     <Compile Include="DAL\AssetAttribute.cs" />
     <Compile Include="DAL\DB.cs" />
@@ -132,6 +131,8 @@
     <Compile Include="Models\NotificationsRepository.cs" />
     <Compile Include="Models\RenewPasswordView.cs" />
     <Compile Include="Models\SelectListUtilities.cs" />
+    <Compile Include="Models\Student.cs" />
+    <Compile Include="Models\StudentsRepository.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UsersRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

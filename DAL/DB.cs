@@ -1,5 +1,6 @@
 ﻿using EmailHandling;
 using Models;
+using Registrar.Models;
 
 namespace DAL
 {
@@ -27,5 +28,8 @@ namespace DAL
 
         static public Repository<RenewPasswordCommand> RenewPasswordCommands { get; set; }
             = new Repository<RenewPasswordCommand>();
+
+        static public StudentsRepository Students { get; set; }
+            = new StudentsRepository();
     }
 }
