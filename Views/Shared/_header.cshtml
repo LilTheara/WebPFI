@@ -7,12 +7,12 @@
 
     bool search = Session["Search"] != null ? (bool)Session["Search"] : false;
     string searchString = Session["SearchString"] != null ? (string)Session["SearchString"] : "";
-    int currentMediaId = Session["CurrentMediaId"] != null ? (int)Session["CurrentMediaId"] : 0;
-    string currentMediaTitle = Session["currentMediaTitle"] != null ? (string)Session["currentMediaTitle"] : "";
-    string selectedCategory = Session["CurrentSelectedCategory"] != null ? (string)Session["CurrentSelectedCategory"] : "";
-    bool SearchAscending = Session["SortAscending"] != null ? (bool)Session["SortAscending"] : false;
+    int currentStudentId = Session["CurrentStudentId"] != null ? (int)Session["CurrentStudentId"] : 0;
+    string currentStudentName = Session["currentStudentName"] != null ? (string)Session["currentStudentName"] : "";
+    //string selectedCategory = Session["CurrentSelectedCategory"] != null ? (string)Session["CurrentSelectedCategory"] : "";
+    //bool SearchAscending = Session["SortAscending"] != null ? (bool)Session["SortAscending"] : false;
 
-    var Categories = (List<string>)Session["Categories"];
+    //var Categories = (List<string>)Session["Categories"];
 
     bool userConnected = Models.User.ConnectedUser != null;
     bool userIsAdmin = userConnected ? Models.User.ConnectedUser.IsAdmin : false;
@@ -45,15 +45,6 @@
                     @if (userCanWrite)
                     {
                         <a href="/@controller/Create" class="cmdIcon fa fa-circle-plus" title="Ajouter..."></a>
-                    }
-
-                    @if (SearchAscending)
-                    {
-                        <a href="/@controller/ToggleSort" class="cmdIcon fa fa-arrow-down-short-wide" title="Tri ascendant..."></a>
-                    }
-                    else
-                    {
-                        <a href="/@controller/ToggleSort" class="cmdIcon fa fa-arrow-up-wide-short" title="Tri descendant..."></a>
                     }
 
                     <a href="/@controller/ToggleSearch" class="cmdIcon fa fa-search" title="Recherche..."></a>
@@ -120,7 +111,7 @@
                         <a href="/@controller/Edit" class="cmdIcon fa fa-pen-to-square" title="Modifier..."></a>
                         <i class="cmdIcon fa fa-trash-can"
                            title="Effacer"
-                           onclick="bootbox.confirm(`<b style=color:red>Effacer le Media : </b><h3>@currentMediaTitle?</h3>`, function(result){ if (result) window.location = '/@controller/Delete'; })">
+                           onclick="bootbox.confirm(`<b style=color:red>Effacer l'étudiant : </b><h3>@currentStudentName?</h3>`, function(result){ if (result) window.location = '/@controller/Delete'; })">
                         </i>
                     }
 
@@ -139,7 +130,7 @@
             case "edit":
                 <div id="mainMenuPanel" class="menu">
                     <i class="cmdIcon submitCmd fa fa-circle-check" title="Soumettre" onclick="document.getElementById('submit').click()"></i>
-                    <a href="/@controller/Details/@currentMediaId" class="cmdIcon fa fa-square-xmark" title="Annuler"></a>
+                    <a href="/@controller/Details/@currentStudentId" class="cmdIcon fa fa-square-xmark" title="Annuler"></a>
                 </div>
                 break;
             case "loginsjournal":
@@ -154,23 +145,10 @@
 
     </div>
 </div>
-@if (search && controller=="medias" && action == "list")
+@if (search && controller=="students" && action == "list")
 {
     <div class="searchBar">
         <input type="search" id="searchInput" class="section roundedBorder searchBarItem" value="@searchString" placeholder="Recherche...">
-        <div id="categorySelectPanel" class="searchBarItem">
-            <!-- Dynamically refreshed -->
-            @{
-                Html.RenderPartial("GetMediasCategoriesList");
-            }
-
-        </div>
-        <div id="ownerSelectPanel" class="searchBarItem">
-            <!-- Dynamically refreshed -->
-            @{
-                Html.RenderPartial("GetMediasOwnersList");
-            }
-        </div>
     </div>
 }
 

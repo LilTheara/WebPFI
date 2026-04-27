@@ -5,9 +5,12 @@ using System.Web;
 using System.Web.Mvc;
 using DAL;
 using Models;
+using static Controllers.AccessControl;
 
 namespace Controllers
 {
+
+	[UserAccess(Access.View)]
 	public class StudentsController : Controller
 	{
 		private void InitSessionVariables()
@@ -33,7 +36,7 @@ namespace Controllers
 			if (Session["pageNum"] == null) Session["pageNum"] = 1;
 			if (Session["firstPageSize"] == null) Session["firstPageSize"] = 20;
 			if (Session["pageSize"] == null) Session["pageSize"] = 3;
-			if (Session["EndOfMedias"] == null) Session["EndOfMedias"] = false;
+			if (Session["EndOfStudents"] == null) Session["EndOfStudents"] = false;
 			if (Session["StudentsYearsList"] == null) Session["StudentsYearsList"] = DB.Students.Years();
 		}
 		private List<Student> _getItems(int index, int nbItems)
@@ -55,7 +58,7 @@ namespace Controllers
 				if (result.Count() < nbItems + index)
 				{
 					nbItems = result.Count() - index;
-					Session["EndOfMedias"] = true;
+					Session["EndOfStudents"] = true;
 				}
 				return result.Skip(index).Take(nbItems).ToList();
 			}
@@ -64,7 +67,24 @@ namespace Controllers
 				return null;
 			}
 		}
-
+		private void ResetStudentsPaging()
+		{
+			Session["pageNum"] = 1;
+			Session["EndOfStudents"] = false;
+		}
+		public ActionResult ToggleSearch()
+		{
+			ResetStudentsPaging();
+			if (Session["Search"] == null) Session["Search"] = false;
+			Session["Search"] = !(bool)Session["Search"];
+			return RedirectToAction("List");
+		}
+		public ActionResult SetSearchString(string value)
+		{
+			ResetStudentsPaging();
+			Session["SearchString"] = value.ToLower();
+			return RedirectToAction("List");
+		}
 		public ActionResult List()
 		{
 			return View();

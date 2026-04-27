@@ -114,16 +114,40 @@
                 }
                 sessionStorage.clear("RestoreScrollPosition");
                 highlightKeyword();
+                RestoreDetailsState();
             }
 
             function highlightKeyword() {
                 if ("@search" == "True") {
                     let keyword = $("#searchInput").val();
                     if (keyword.length > 0) {
-						let titles = document.getElementsByClassName('studentTitle');
-                        Array.from(titles).forEach(title => {
-                            highlight(keyword, title);
+						let names = document.getElementsByClassName('studentName');
+						Array.from(names).forEach(name => {
+							highlight(keyword, name);
                         })
+                    }
+                }
+            }
+            function RestoreDetailsState() {
+                //install event handler ?
+                $("details").off();
+                $("details").on('toggle', function () {
+                    let details_dom = $(this)[0];
+                    if (details_dom != undefined) {
+                        // Save detail state
+                        localStorage.setItem(details_dom.id, details_dom.open);
+                    }
+                })
+                // Restore state of each details tags
+                for (let i = 0; i < localStorage.length; i++) {
+                    const key = localStorage.key(i);
+                    // target only keys that contains "details" string
+                    if (key.indexOf("details") > -1) {
+                        let details_dom = $("#" + key)[0];
+                        if (details_dom != undefined)
+                            // all values in localstorage are stored as string
+                            details_dom.open = localStorage.getItem(key) == "true";
+                        let i = 0;
                     }
                 }
             }
