@@ -1,6 +1,5 @@
 ﻿using EmailHandling;
 using Models;
-using Registrar.Models;
 
 namespace DAL
 {

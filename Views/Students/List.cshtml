@@ -1,0 +1,132 @@
+@{
+	ViewBag.PageTitle = "Étudiants";
+	string search = Session["Search"] != null ? ((bool)Session["Search"]).ToString() : false.ToString();
+}
+
+<div id="StudentListPanel" class="studentListLayout">
+	<!-- Periodicaly refreshed by object contactListPanel of class AutoRefreshedPanel -->
+</div>
+
+@section Scripts {
+	<script>
+
+        let studentsListAutoRefreshPanel = null;
+        let ownersSelectAutoRefreshPanel = null;
+        let loadMoreTriggerMargin = 10;
+        let pauseScrollEvent = false;
+
+        $(() => {
+            newSession(600);
+            //setCurrentPageLimit();
+
+            studentsListAutoRefreshPanel =
+                new AutoRefreshedPanel(
+                    "StudentListPanel",
+                    "/Students/GetStudents",
+                    10,
+                    studentsListPostRefresh);
+
+            let keywordsOnchangeTimer = null;
+            let resizeTimer = null;
+            let resizeEndTriggerDelai = 300;
+            let minKeywordLenth = 3;
+
+            // install rezise viewport event handler in orther to set Students/List vue firstpage size
+            $(window).on('resize', function (e) {
+                studentsListAutoRefreshPanel.pause();
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(() => {
+                    setCurrentPageLimit();
+                    studentsListAutoRefreshPanel.restart();
+                    studentsListAutoRefreshPanel.refresh(true);
+                }, resizeEndTriggerDelai);
+            });
+
+            function setCurrentPageLimit() {
+				let nbColumns = 3; // at worse there will be 3 students per row.
+                let nbRows = 4; // default value that will change with windows.resize events
+                let pageSize = nbRows * nbColumns + nbColumns;
+				let studentLayout = $(".studentLayout").first();
+
+				if (studentLayout != null) {
+					let nbRows = Math.round($("#mainContentPanel").innerHeight() / studentLayout.outerHeight());
+                    pageSize = nbRows * nbColumns + nbColumns /* make sure to always have a content overflow */;
+                }
+                console.log("pageSize ", pageSize)
+                if (pageSize != NaN)
+					$.ajax({ url: `/Students/SetFirstPageSize?pageSize=${pageSize}` });
+            }
+            // Load on demand handling (infinite scroll)
+            $("#mainContentPanel").scroll(function () {
+                let scrollPanel = $(this);
+                if (!pauseScrollEvent) {
+					if ((scrollPanel.scrollTop() + scrollPanel.outerHeight() >= $("#StudentListPanel").outerHeight() - loadMoreTriggerMargin)) {
+                        pauseScrollEvent = true;
+                        $.ajax({
+							url: "/Students/getNextStudentsPage",
+                            dataType: "html",
+                            success: (htmlContent) => {
+                                studentsListAutoRefreshPanel.appendContent(htmlContent);
+                                pauseScrollEvent = false;
+                            },
+                            statusCode: { 401: this.redirect }
+                        })
+                    }
+                }
+            })
+            $("#searchInput").on('keyup', function () {
+                clearTimeout(keywordsOnchangeTimer);
+                /* delay request by 0.5 seconds */
+                keywordsOnchangeTimer = setTimeout(() => {
+					window.location = "/Students/SetSearchString?value=" + $("#searchInput").val();
+                }, 1000 /* 1 seconds */);
+            });
+            $("#searchInput").on('search', function () { /* click on clear */
+                clearTimeout(keywordsOnchangeTimer);
+				window.location = "/Students/SetSearchString?value=" + $("#searchInput").val();
+            });
+            $("#searchInput").on("focus", function () {
+                studentsListAutoRefreshPanel.pause();
+            });
+            $("#searchInput").on("blur", function () {
+                studentsListAutoRefreshPanel.restart();
+            });
+
+			function studentsListPostRefresh(fromRefresh = true) {
+                if (fromRefresh) {
+                    $(".toggleLikeCmd").off();
+                    $(".toggleLikeCmd").click(function (e) {
+						studentsListAutoRefreshPanel.command("/Students/ToggleStudentLike/" + $(this).attr("studentId"));
+                        e.preventDefault();
+                    });
+                }
+				$(".studentThumbnail").off();
+				$(".studentThumbnail").on("click", function () {
+                    let scrollPanel = $("#mainContentPanel");
+                    sessionStorage.setItem("previousScrollPosition", scrollPanel.scrollTop());
+                })
+                let scrollPanel = $("#mainContentPanel");
+                let scrollPos = sessionStorage.getItem("previousScrollPosition");
+                let RestoreScrollPosition = sessionStorage.getItem("RestoreScrollPosition");
+                // Restore scroll position
+                if (RestoreScrollPosition != null && scrollPos != null) {
+                    scrollPanel.scrollTop(parseInt(scrollPos));
+                }
+                sessionStorage.clear("RestoreScrollPosition");
+                highlightKeyword();
+            }
+
+            function highlightKeyword() {
+                if ("@search" == "True") {
+                    let keyword = $("#searchInput").val();
+                    if (keyword.length > 0) {
+						let titles = document.getElementsByClassName('studentTitle');
+                        Array.from(titles).forEach(title => {
+                            highlight(keyword, title);
+                        })
+                    }
+                }
+            }
+        })
+	</script>
+}

@@ -110,6 +110,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccessControl.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
+    <Compile Include="Controllers\StudentsController.cs" />
     <Compile Include="Controllers\NotificationsController.cs" />
     <Compile Include="DAL\AssetAttribute.cs" />
     <Compile Include="DAL\DB.cs" />
@@ -208,9 +209,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="WebApp.png" />
   </ItemGroup>
   <ItemGroup />
@@ -230,8 +228,6 @@
     <Content Include="Views\Accounts\Login.cshtml" />
     <Content Include="Views\Accounts\Subscribe.cshtml" />
     <Content Include="Views\Accounts\ProfilForm.cshtml" />
-    <Content Include="Views\Home\ProtectedView.cshtml" />
-    <Content Include="Views\Home\GetData.cshtml" />
     <Content Include="Views\Accounts\EditProfil.cshtml" />
     <Content Include="Views\Accounts\RenewPassword.cshtml" />
     <Content Include="Views\Accounts\RenewPasswordCommand.cshtml" />
@@ -242,6 +238,9 @@
     <Content Include="Views\Accounts\ManageUsers.cshtml" />
     <Content Include="Views\Accounts\GetUsers.cshtml" />
     <None Include="Properties\PublishProfiles\Registrar-2026 - Web Deploy.pubxml" />
+    <Content Include="Views\Students\SetYear.cshtml" />
+    <Content Include="Views\Students\List.cshtml" />
+    <Content Include="Views\Students\GetStudents.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

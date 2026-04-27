@@ -7,7 +7,7 @@ namespace Registrar
     {
         public static string DefaultAction()
         {
-            return "/Medias/List";  //to change
+            return "/Students/List";
         }
 
         public static void RegisterRoutes(RouteCollection routes)
