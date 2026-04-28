@@ -23,14 +23,14 @@ namespace Controllers
 			//if (Session["CurrentMediaTitle"] == null) Session["CurrentMediaTitle"] = "";
 			if (Session["Search"] == null) Session["Search"] = false;
 			if (Session["SearchString"] == null) Session["SearchString"] = "";
-			//if (Session["SelectedCategory"] == null) Session["SelectedCategory"] = "";
+			if (Session["SelectedYear"] == null) Session["SelectedYear"] = 0;
 			//if (Session["Categories"] == null) Session["Categories"] = DB.Medias.MediasCategories();
 			//if (Session["SortByTitle"] == null) Session["SortByTitle"] = true;
 			//if (Session["MediaSortBy"] == null) Session["MediaSortBy"] = MediaSortBy.PublishDate;
 			//if (Session["SortAscending"] == null) Session["SortAscending"] = false;
 			//if (Session["SelectedOwnerId"] == null) Session["SelectedOwnerId"] = 0;
 
-			//ValidateSelectedCategory();
+			ValidateSelectedYear();
 
 			// paging handling
 			if (Session["pageNum"] == null) Session["pageNum"] = 1;
@@ -53,7 +53,12 @@ namespace Controllers
 				result = DB.Students.ToList();
 
 				if (search)
+				{
 					result = result.Where(c => (c.LastName.ToLower() + c.FirstName.ToLower()).Contains(searchString));
+					int SelectedYear = (int)Session["SelectedYear"];
+					if(SelectedYear != 0)
+						result = result.Where(y=>y.Year == SelectedYear);
+				}
 
 				if (result.Count() < nbItems + index)
 				{
@@ -72,6 +77,16 @@ namespace Controllers
 			Session["pageNum"] = 1;
 			Session["EndOfStudents"] = false;
 		}
+		private void ValidateSelectedYear()
+		{
+			if (Session["SelectedYear"] != null)
+			{
+				var selectedYear = (int)Session["SelectedYear"];
+				var Students = DB.Students.ToList().Where(c => c.Year == selectedYear);
+				if (Students.Count() == 0)
+					Session["SelectedYear"] = 0;
+			}
+		}
 		public ActionResult ToggleSearch()
 		{
 			ResetStudentsPaging();
@@ -83,6 +98,12 @@ namespace Controllers
 		{
 			ResetStudentsPaging();
 			Session["SearchString"] = value.ToLower();
+			return RedirectToAction("List");
+		}
+		public ActionResult SetSearchYear(int value)
+		{
+			ResetStudentsPaging();
+			Session["SelectedYear"] = value;
 			return RedirectToAction("List");
 		}
 		public ActionResult List()
@@ -110,7 +131,27 @@ namespace Controllers
 				return Content("Erreur interne " + ex.Message, "text/html");
 			}
 		}
-		
+		public ActionResult GetYearsList()
+		{
+			try
+			{
+				InitSessionVariables();
+				bool search = (bool)Session["Search"];
+
+				if (search)
+				{
+					var years = DB.Students.Years();
+					ViewBag.SelectedYear = (int)Session["SelectedYear"];
+					return PartialView(years);
+				}
+				return null;
+			}
+			catch (System.Exception ex)
+			{
+				return Content("Erreur interne " + ex.Message, "text/html");
+			}
+		}
+
 		public ActionResult SetYear()
 		{
 			ViewBag.Year = NextSession.Year;
@@ -122,7 +163,7 @@ namespace Controllers
 		public ActionResult SetYear(int year, string session)
 		{
 			NextSession.CurrentDate = new DateTime(year, (session == "Automne" ? 8 : 1), 15);
-			return RedirectToAction("Index");
+			return RedirectToAction("List");
 		}
 	}
 }

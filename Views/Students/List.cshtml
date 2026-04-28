@@ -11,7 +11,7 @@
 	<script>
 
         let studentsListAutoRefreshPanel = null;
-        let ownersSelectAutoRefreshPanel = null;
+        let yearsSelectAutoRefreshPanel = null;
         let loadMoreTriggerMargin = 10;
         let pauseScrollEvent = false;
 
@@ -25,6 +25,12 @@
                     "/Students/GetStudents",
                     10,
                     studentsListPostRefresh);
+			yearsSelectAutoRefreshPanel =
+				new AutoRefreshedPanel(
+					"yearSelectPanel",
+					"/Students/GetYearsList",
+					-1 /* manually refreshed */,
+					yearsSelectPostRefresh);
 
             let keywordsOnchangeTimer = null;
             let resizeTimer = null;
@@ -94,6 +100,7 @@
 
 			function studentsListPostRefresh(fromRefresh = true) {
                 if (fromRefresh) {
+                    yearsSelectAutoRefreshPanel.refresh(true);
                     $(".toggleLikeCmd").off();
                     $(".toggleLikeCmd").click(function (e) {
 						studentsListAutoRefreshPanel.command("/Students/ToggleStudentLike/" + $(this).attr("studentId"));
@@ -116,6 +123,19 @@
                 highlightKeyword();
                 RestoreDetailsState();
             }
+
+			function yearsSelectPostRefresh() {
+				$("#yearSelect").off();
+				$("#yearSelect").on("focus", function () {
+					studentsListAutoRefreshPanel.pause();
+				});
+				$("#yearSelect").on("blur", function () {
+					studentsListAutoRefreshPanel.restart();
+				});
+				$("#yearSelect").on('change', function () {
+					window.location = "/Students/SetSearchYear?value=" + $("#yearSelect").val();
+				});
+			}
 
             function highlightKeyword() {
                 if ("@search" == "True") {

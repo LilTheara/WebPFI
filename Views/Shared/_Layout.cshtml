@@ -24,9 +24,12 @@
                 @RenderBody()
             </div>
         </div>
+        @{
+            //form of SetYear.cshtml here
+        }
 
         <div id="footerPanel" class="section footerPanel roundedBorder">
-            <a href="../Students/SetYear.cshtml" style="font-weight:bold">Session courante : @NextSession.ShortCaption</a>
+            <a href="@Url.Action("SetYear", "Students")" style="font-weight:bold">Session courante : @NextSession.ShortCaption</a>
             <img src="/updatingView.gif" 
                  style="width:24px; display:none" 
                  id="updatingView"

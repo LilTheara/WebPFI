@@ -9,7 +9,7 @@
     string searchString = Session["SearchString"] != null ? (string)Session["SearchString"] : "";
     int currentStudentId = Session["CurrentStudentId"] != null ? (int)Session["CurrentStudentId"] : 0;
     string currentStudentName = Session["currentStudentName"] != null ? (string)Session["currentStudentName"] : "";
-    //string selectedCategory = Session["CurrentSelectedCategory"] != null ? (string)Session["CurrentSelectedCategory"] : "";
+    int selectedYear = Session["SelectedYear"] != null ? (int)Session["SelectedYear"] : 0;
     //bool SearchAscending = Session["SortAscending"] != null ? (bool)Session["SortAscending"] : false;
 
     //var Categories = (List<string>)Session["Categories"];
@@ -21,135 +21,145 @@
 }
 
 <div class="section roundedBorder">
-    <div class="headerMenu">
-        <i class="siteIcon"></i>
-        <div class="pageTitle"> @ViewBag.PageTitle </div>
-        <!-- Direct action context command icons -->
-        @switch (action)
-        {
-            case "login": break;
-            case "subscribe":
-                <div id="mainMenuPanel" class="menu">
-                    <i class="cmdIcon submitCmd fa fa-circle-check" title="Soumettre" onclick="document.getElementById('submit').click()"></i>
-                    <a class="cmdIcon fa fa-square-xmark" title="Annuler" onclick="history.back()"></a>
-                </div>
-                break;
-            case "editprofil":
-                <div id="mainMenuPanel" class="menu">
-                    <i class="cmdIcon submitCmd fa fa-circle-check" title="Soumettre" onclick="document.getElementById('submit').click()"></i>
-                    <a class="cmdIcon fa fa-square-xmark" title="Annuler" onclick="history.back()"></a>
-                </div>
-                break;
-            case "list":
-                <div id="mainMenuPanel" class="menu">
-                    @if (userCanWrite)
-                    {
-                        <a href="/@controller/Create" class="cmdIcon fa fa-circle-plus" title="Ajouter..."></a>
-                    }
+	<div class="headerMenu">
+		<i class="siteIcon"></i>
+		<div class="pageTitle"> @ViewBag.PageTitle </div>
+		<!-- Direct action context command icons -->
+		@switch (action)
+		{
+			case "login": break;
+			case "subscribe":
+				<div id="mainMenuPanel" class="menu">
+					<i class="cmdIcon submitCmd fa fa-circle-check" title="Soumettre" onclick="document.getElementById('submit').click()"></i>
+					<a class="cmdIcon fa fa-square-xmark" title="Annuler" onclick="history.back()"></a>
+				</div>
+				break;
+			case "editprofil":
+				<div id="mainMenuPanel" class="menu">
+					<i class="cmdIcon submitCmd fa fa-circle-check" title="Soumettre" onclick="document.getElementById('submit').click()"></i>
+					<a class="cmdIcon fa fa-square-xmark" title="Annuler" onclick="history.back()"></a>
+				</div>
+				break;
+			case "list":
+				<div id="mainMenuPanel" class="menu">
+					@if (userCanWrite)
+					{
+						<a href="/@controller/Create" class="cmdIcon fa fa-circle-plus" title="Ajouter..."></a>
+					}
 
-                    <a href="/@controller/ToggleSearch" class="cmdIcon fa fa-search" title="Recherche..."></a>
+					<a href="/@controller/ToggleSearch" class="cmdIcon fa fa-search" title="Recherche..."></a>
 
-                    <!-- Dropdown menu -->
-                    <div id="menu" class="dropdown ms-auto">
-                        <!-- Drop down menu acces icon -->
-                        <div data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="cmdIcon fa fa-bars" title="Menu"></i>
-                        </div>
-                        <!-- Drop down menu items -->
-                        <div class="dropdown-menu noselect" id="DDMenu" style="width:300px !important">
-                            <div class="dropdown-item item-layout">
-                                <i class="menuIcon fa fa-address-card"></i>
-                                <a href="/Accounts/EditProfil">Profil...</a>
-                            </div>
-                            <div class="dropdown-item item-layout">
-                                <i class="menuIcon fa fa-sign-out"></i>
-                                <a href="/Accounts/Logout">Déconnexion...</a>
-                            </div>
-                            @if (userIsAdmin)
-                            {
-                                <div class="dropdown-divider"></div>
+					<!-- Dropdown menu -->
+					<div id="menu" class="dropdown ms-auto">
+						<!-- Drop down menu acces icon -->
+						<div data-bs-toggle="dropdown" aria-expanded="false">
+							<i class="cmdIcon fa fa-bars" title="Menu"></i>
+						</div>
+						<!-- Drop down menu items -->
+						<div class="dropdown-menu noselect" id="DDMenu" style="width:300px !important">
+							<div class="dropdown-item item-layout">
+								<i class="menuIcon fa fa-address-card"></i>
+								<a href="/Accounts/EditProfil">Profil...</a>
+							</div>
+							<div class="dropdown-item item-layout">
+								<i class="menuIcon fa fa-sign-out"></i>
+								<a href="/Accounts/Logout">Déconnexion...</a>
+							</div>
+							@if (userIsAdmin)
+							{
+								<div class="dropdown-divider"></div>
 
-                                <div class="dropdown-item item-layout">
-                                    <i class="menuIcon fa fa-users"></i>
-                                    <a href="/Accounts/ManageUsers">
-                                        Gestion des usagers...
-                                    </a>
-                                </div>
-                                <div class="dropdown-item item-layout">
-                                    <i class="menuIcon fa fa-calendar-days"></i>
-                                    <a href="/Accounts/LoginsJournal">
-                                        Historique de connexions...
-                                    </a>
-                                </div>
-                                <div class="dropdown-item item-layout">
-                                    <i class="menuIcon fa fa-gear"></i>
-                                    <a href="/Accounts/EventsJournal">
-                                        Journal d'activités...
-                                    </a>
-                                </div>
-                            }
+								<div class="dropdown-item item-layout">
+									<i class="menuIcon fa fa-users"></i>
+									<a href="/Accounts/ManageUsers">
+										Gestion des usagers...
+									</a>
+								</div>
+								<div class="dropdown-item item-layout">
+									<i class="menuIcon fa fa-calendar-days"></i>
+									<a href="/Accounts/LoginsJournal">
+										Historique de connexions...
+									</a>
+								</div>
+								<div class="dropdown-item item-layout">
+									<i class="menuIcon fa fa-gear"></i>
+									<a href="/Accounts/EventsJournal">
+										Journal d'activités...
+									</a>
+								</div>
+							}
 
-                            <div class="dropdown-divider"></div>
+							<div class="dropdown-divider"></div>
 
-                            <div class="dropdown-divider"></div>
+							<div class="dropdown-divider"></div>
 
-                            <div class="dropdown-item item-layout">
-                                <i class="menuIcon fa fa-info-circle"></i>
-                                <a href="/@controller/About">À propos...</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                break;
-            case "details":
-                <div id="mainMenuPanel" class="menu">
-                    <div id="likesPanel">
-                        <!-- auto refreshed -->
-                    </div>
-                    @if (userCanWrite && (bool)ViewBag.IsOwner)
-                    {
-                        <a href="/@controller/Edit" class="cmdIcon fa fa-pen-to-square" title="Modifier..."></a>
-                        <i class="cmdIcon fa fa-trash-can"
-                           title="Effacer"
-                           onclick="bootbox.confirm(`<b style=color:red>Effacer l'étudiant : </b><h3>@currentStudentName?</h3>`, function(result){ if (result) window.location = '/@controller/Delete'; })">
-                        </i>
-                    }
+							<div class="dropdown-item item-layout">
+								<i class="menuIcon fa fa-info-circle"></i>
+								<a href="/@controller/About">À propos...</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				break;
+			case "details":
+				<div id="mainMenuPanel" class="menu">
+					<div id="likesPanel">
+						<!-- auto refreshed -->
+					</div>
+					@if (userCanWrite && (bool)ViewBag.IsOwner)
+					{
+						<a href="/@controller/Edit" class="cmdIcon fa fa-pen-to-square" title="Modifier..."></a>
+						<i class="cmdIcon fa fa-trash-can"
+						   title="Effacer"
+						   onclick="bootbox.confirm(`<b style=color:red>Effacer l'étudiant : </b><h3>@currentStudentName?</h3>`, function(result){ if (result) window.location = '/@controller/Delete'; })">
+						</i>
+					}
 
-                    <a href="/@controller/List" class="cmdIcon fa fa-square-xmark" title="retour"></a>
-                </div>
-                break;
-            case "create":
-                if (userCanWrite)
-                {
-                    <div id="mainMenuPanel" class="menu">
-                        <i class="cmdIcon submitCmd fa fa-circle-check" title="Soumettre" onclick="document.getElementById('submit').click()"></i>
-                        <a href="@index" class="cmdIcon fa fa-square-xmark" title="Annuler"></a>
-                    </div>
-                }
-                break;
-            case "edit":
-                <div id="mainMenuPanel" class="menu">
-                    <i class="cmdIcon submitCmd fa fa-circle-check" title="Soumettre" onclick="document.getElementById('submit').click()"></i>
-                    <a href="/@controller/Details/@currentStudentId" class="cmdIcon fa fa-square-xmark" title="Annuler"></a>
-                </div>
-                break;
-            case "loginsjournal":
-            case "eventsjournal":
-            case "manageusers":
-            case "about":
-                <div id="mainMenuPanel" class="menu">
-                    <a href="@index" class="cmdIcon fa fa-square-xmark" title="Retour"></a>
-                </div>
-                break;
-        }
+					<a href="/@controller/List" class="cmdIcon fa fa-square-xmark" title="retour"></a>
+				</div>
+				break;
+			case "create":
+				if (userCanWrite)
+				{
+					<div id="mainMenuPanel" class="menu">
+						<i class="cmdIcon submitCmd fa fa-circle-check" title="Soumettre" onclick="document.getElementById('submit').click()"></i>
+						<a href="@index" class="cmdIcon fa fa-square-xmark" title="Annuler"></a>
+					</div>
+				}
+				break;
+			case "edit":
+				<div id="mainMenuPanel" class="menu">
+					<i class="cmdIcon submitCmd fa fa-circle-check" title="Soumettre" onclick="document.getElementById('submit').click()"></i>
+					<a href="/@controller/Details/@currentStudentId" class="cmdIcon fa fa-square-xmark" title="Annuler"></a>
+				</div>
+				break;
+			case "setyear":
+				<div id="mainMenuPanel" class="menu">
+					<i class="cmdIcon submitCmd fa fa-circle-check" title="Soumettre" onclick="document.getElementById('submit').click()"></i>
+					<a href="/@controller/List" class="cmdIcon fa fa-square-xmark" title="Annuler"></a>
+				</div>
+				break;
+			case "loginsjournal":
+			case "eventsjournal":
+			case "manageusers":
+			case "about":
+				<div id="mainMenuPanel" class="menu">
+					<a href="@index" class="cmdIcon fa fa-square-xmark" title="Retour"></a>
+				</div>
+				break;
+		}
 
-    </div>
+	</div>
 </div>
 @if (search && controller=="students" && action == "list")
 {
-    <div class="searchBar">
-        <input type="search" id="searchInput" class="section roundedBorder searchBarItem" value="@searchString" placeholder="Recherche...">
-    </div>
+	<div class="searchBar">
+		<input type="search" id="searchInput" class="section roundedBorder searchBarItem" value="@searchString" placeholder="Recherche...">
+		<div id="yearSelectPanel" class="flexItem">
+			<!-- Dynamically refreshed -->
+			@{ Html.RenderPartial("GetYearsList"); }
+		</div>
+	</div>
 }
 
 
