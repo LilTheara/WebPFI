@@ -164,7 +164,6 @@
     <Content Include="Content\Icons.css" />
     <Content Include="Content\image-control.css" />
     <Content Include="Content\jqui-custom-datepicker.css" />
-    <Content Include="Content\media.css" />
     <Content Include="Content\menu.css" />
     <Content Include="Content\popup.css" />
     <Content Include="Content\Selections.css" />

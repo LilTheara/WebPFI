@@ -16,7 +16,8 @@ namespace Registrar
                             "~/Scripts/session.js",
                             "~/Scripts/SiteNotificationsHandler.js",
                             "~/Scripts/autoRefreshPanel.js",
-                            "~/Scripts/image-control.js"));
+                            "~/Scripts/image-control.js",
+                            "~/Scripts/pageManager.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                         "~/Content/_layout.css",
@@ -24,11 +25,13 @@ namespace Registrar
                         "~/Content/popup.css",
                         "~/Content/Selection.css",
                         "~/Content/site.css",
-                        "~/Content/menu.css", 
-                        "~/Content/media.css",
+                        "~/Content/menu.css",
                         "~/Content/Icons.css",
                         "~/Content/image-control.css",
-                        "~/Content/jqui-custom-datepicker.css"));
+                        "~/Content/jqui-custom-datepicker.css",
+                        "~/Content/Courses.css",
+                        "~/Content/Student.css",
+                        "~/Content/Teachers.css"));
         }
     }
 }
