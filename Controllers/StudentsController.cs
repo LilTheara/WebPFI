@@ -110,7 +110,7 @@ namespace Controllers
 				return Content("Erreur interne " + ex.Message, "text/html");
 			}
 		}
-		/*
+		
 		public ActionResult SetYear()
 		{
 			ViewBag.Year = NextSession.Year;
@@ -124,6 +124,5 @@ namespace Controllers
 			NextSession.CurrentDate = new DateTime(year, (session == "Automne" ? 8 : 1), 15);
 			return RedirectToAction("Index");
 		}
-		*/
 	}
 }
