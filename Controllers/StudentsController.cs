@@ -123,6 +123,59 @@ namespace Controllers
 			}
 			return RedirectToAction("List");
 		}
+		[UserAccess(Models.Access.Write)]
+		public ActionResult Delete()
+		{
+			int id = Session["CurrentStudentId"] != null ? (int)Session["CurrentStudentId"] : 0;
+			if (id != 0)
+			{
+				DB.Students.Delete(id);
+			}
+			return RedirectToAction("List");
+		}
+		public ActionResult Edit()
+		{
+			int id = Session["CurrentStudentId"] != null ? (int)Session["CurrentStudentId"] : 0;
+			if (id != 0)
+			{
+				Student student = DB.Students.Get(id);
+				if (student != null)
+				{
+					if (Models.User.ConnectedUser.Access >= Access.Write || Models.User.ConnectedUser.IsAdmin)
+						return View(student);
+				}
+			}
+			return Redirect("/Accounts/Login?message=Accès illégal! &success=false");
+		}
+
+		[UserAccess(Access.Write)]
+		[HttpPost]
+		[ValidateAntiForgeryToken()]
+		public ActionResult Edit(Student student, string sharedCB = "off")
+		{
+			int id = Session["CurrentStudentId"] != null ? (int)Session["CurrentStudentId"] : 0;
+
+			Student storedStudent = DB.Students.Get(id);
+			if (storedStudent != null)
+			{
+				student.Id = id;
+
+				if (student.IsValid())
+				{
+					DB.Students.Update(student);
+					return RedirectToAction("Details/" + id);
+				}
+			}
+			DB.Events.Add("Illegal Edit Student");
+			return Redirect("/Accounts/Login?message=Erreur de modification de Student!&success=false");
+		}
+		public JsonResult CheckConflict(string Email)
+		{
+			int id = Session["CurrentStudentId"] != null ? (int)Session["CurrentStudentId"] : 0;
+			// Response json value true if name is used in other Medias than the current Media
+			return Json(DB.Students.ToList().Where(c => c.Email == Email && c.Id != id).Any(),
+						JsonRequestBehavior.AllowGet /* must have for CORS verification by client browser */);
+		}
 		public ActionResult GetStudents(bool forceRefresh = false)
 		{
 			try

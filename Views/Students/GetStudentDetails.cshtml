@@ -3,7 +3,7 @@
 @if (Model != null)
 {
 	//int connectedId = Models.User.ConnectedUser.Id;
-	<details>
+	<details   id="student_details_@Model.Code">
 		<summary>
 			<i class="fa-solid fa-graduation-cap"></i>
 			<strong>@Model.FirstName @Model.LastName</strong>

@@ -23,5 +23,14 @@ namespace Models
 		//[JsonIgnore] public SelectList StudentsSelectList => SelectListUtilities<Student>.Convert(Students, "Caption");
 		//[JsonIgnore]
 		//public SelectList NextSessionStudentsToSelectList => SelectListUtilities<Student>.Convert(NextSessionStudents, "Caption");
+		public override bool IsValid()
+		{
+			if (!HasRequiredLength(FirstName, 1)) return false;
+			if (!HasRequiredLength(LastName, 1)) return false;
+			if (!IsEmail(Email)) return false;
+			if(!IsPhone(Phone)) return false;
+			if (DB.Students.ToList().Where(m => m.Code == Code && m.Id != Id).Any()) return false;
+			return true;
+		}
 	}
 }
