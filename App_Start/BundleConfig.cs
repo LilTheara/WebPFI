@@ -22,15 +22,15 @@ namespace Registrar
             bundles.Add(new StyleBundle("~/Content/css").Include(
                         "~/Content/_layout.css",
                         "~/Content/Accounts.css",
-                        "~/Content/popup.css",
-                        "~/Content/Selection.css",
+						"~/Content/Courses.css",
+						"~/Content/Icons.css",
+						"~/Content/image-control.css",
+						"~/Content/jqui-custom-datepicker.css",
+						"~/Content/menu.css",
+						"~/Content/popup.css",
+						"~/Content/Selection.css",
                         "~/Content/site.css",
-                        "~/Content/menu.css",
-                        "~/Content/Icons.css",
-                        "~/Content/image-control.css",
-                        "~/Content/jqui-custom-datepicker.css",
-                        "~/Content/Courses.css",
-                        "~/Content/Student.css",
+						"~/Content/Students.css",
                         "~/Content/Teachers.css"));
         }
     }

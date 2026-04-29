@@ -110,6 +110,19 @@ namespace Controllers
 		{
 			return View();
 		}
+		public ActionResult Details(int id)
+		{
+			Session["CurrentStudentId"] = id;
+			Student student = DB.Students.Get(id);
+			Session["UserCanEditCurrentStudent"] = false;
+			if (student != null)
+			{
+				Session["CurrentStudentName"] = student.FullName;
+				Session["UserCanEditCurrentStudent"] = Models.User.ConnectedUser.Access >= Access.Write || Models.User.ConnectedUser.IsAdmin;
+				return View(student);
+			}
+			return RedirectToAction("List");
+		}
 		public ActionResult GetStudents(bool forceRefresh = false)
 		{
 			try
@@ -129,6 +142,25 @@ namespace Controllers
 			catch (System.Exception ex)
 			{
 				return Content("Erreur interne " + ex.Message, "text/html");
+			}
+		}
+		public ActionResult GetStudentDetails(bool forceRefresh = false)
+		{
+			try
+			{
+				InitSessionVariables();
+
+				int studentId = (int)Session["CurrentStudentId"];
+				Student student = DB.Students.Get(studentId);
+				if (DB.Students.HasChanged || forceRefresh)
+				{
+					return PartialView(student);
+				}
+				return null;
+			}
+			catch (System.Exception ex)
+			{
+				return Content("Erreur interne" + ex.Message, "text/html");
 			}
 		}
 		public ActionResult GetYearsList()

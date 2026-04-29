@@ -100,7 +100,7 @@
 
 			function studentsListPostRefresh(fromRefresh = true) {
                 if (fromRefresh) {
-                    yearsSelectAutoRefreshPanel.refresh(true);
+                    yearsSelectAutoRefreshPanel.refresh(true)
                     $(".toggleLikeCmd").off();
                     $(".toggleLikeCmd").click(function (e) {
 						studentsListAutoRefreshPanel.command("/Students/ToggleStudentLike/" + $(this).attr("studentId"));

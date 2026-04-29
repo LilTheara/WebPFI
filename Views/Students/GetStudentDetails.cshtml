@@ -1,0 +1,37 @@
+@model Models.Student
+
+@if (Model != null)
+{
+	//int connectedId = Models.User.ConnectedUser.Id;
+	<details>
+		<summary>
+			<i class="fa-solid fa-graduation-cap"></i>
+			<strong>@Model.FirstName @Model.LastName</strong>
+		</summary>
+		<dl>
+			<br />
+			<dd>
+				<i class="fa fa-barcode" title="Code permanent"></i>
+				@Model.Code
+			</dd>
+			<dd>
+				<i class="fa fa-phone" title="Téléphone"></i>
+				@Model.Phone
+			</dd>
+			<dd>
+				<i class="fa fa-paper-plane" title="Courriel"></i>
+				@Model.Email
+			</dd>
+			<dd>
+				<i class="fa fa-birthday-cake" title="Date de naissance"></i>
+				@Model.BirthDate.ToString("dd MMMM yyyy")
+			</dd>
+		</dl>
+	</details>
+	<hr />
+	<h3>Inscriptions</h3>
+}
+else
+{
+	<h2 style="color:red">Cette élève a été effacée...</h2>
+}
