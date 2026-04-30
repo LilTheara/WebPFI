@@ -133,6 +133,26 @@ namespace Controllers
 			}
 			return RedirectToAction("List");
 		}
+		[UserAccess(Access.Write)]
+		public ActionResult Create()
+		{
+			return View(new Student());
+		}
+
+		[HttpPost]
+		[UserAccess(Access.Write)]
+		[ValidateAntiForgeryToken()]
+		public ActionResult Create(Student Student)
+		{
+			if (Student.IsValid())
+			{
+				DB.Students.Add(Student);
+				DB.Events.Add("Create", Student.FullName);
+				return RedirectToAction("List");
+			}
+			DB.Events.Add("Illegal Create Student");
+			return Redirect("/Accounts/Login?message=Erreur de creation de Student!&success=false");
+		}
 		public ActionResult Edit()
 		{
 			int id = Session["CurrentStudentId"] != null ? (int)Session["CurrentStudentId"] : 0;

@@ -246,6 +246,7 @@
     <Content Include="Views\Students\GetStudentDetails.cshtml" />
     <Content Include="Views\Students\Edit.cshtml" />
     <Content Include="Views\Students\StudentForm.cshtml" />
+    <Content Include="Views\Students\Create.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -33,6 +33,10 @@
     text-align: left;
     font-weight: bold;
 }
+.pageTitleSecondary {
+    font-weight: normal;
+    color: lightgrey;
+}
 
 .menu {
     display: flex;

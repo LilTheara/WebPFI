@@ -23,7 +23,27 @@
 <div class="section roundedBorder">
 	<div class="headerMenu">
 		<i class="siteIcon"></i>
-		<div class="pageTitle"> @ViewBag.PageTitle </div>
+		<div class="pageTitle">
+			@if (action != "list")
+			{
+				@ViewBag.PageTitle
+			}
+			else
+			{
+				<a href="/Students/List"
+				   class="@(controller != "students" ? "pageTitleSecondary" : "")">
+					Étudiants
+				</a>
+				<a href="/Courses/List"
+				   class="@(controller != "courses" ? "pageTitleSecondary" : "")">
+					Cours
+				</a>
+				<a href="/Teachers/List"
+				   class="@(controller != "teachers" ? "pageTitleSecondary" : "")">
+					Profs
+				</a>
+			}
+		</div>
 		<!-- Direct action context command icons -->
 		@switch (action)
 		{
@@ -148,14 +168,17 @@
 
 	</div>
 </div>
-@if (search && controller=="students" && action == "list")
+@if (search && action == "list")
 {
 	<div class="searchBar">
 		<input type="search" id="searchInput" class="section roundedBorder searchBarItem" value="@searchString" placeholder="Recherche...">
-		<div id="yearSelectPanel" class="flexItem">
-			<!-- Dynamically refreshed -->
-			@{ Html.RenderPartial("GetYearsList"); }
-		</div>
+		@if (controller == "students")
+		{
+			<div id="yearSelectPanel" class="flexItem">
+				<!-- Dynamically refreshed -->
+				@{ Html.RenderPartial("GetYearsList"); }
+			</div>
+		}
 	</div>
 }
 
