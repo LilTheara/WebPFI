@@ -1,0 +1,41 @@
+@model Registrar.Models.Course
+
+@if (Model != null)
+{
+    <details id="course_details_@Model.Code" open>
+        <summary>
+            <i class="fa-solid fa-book"></i>
+            <strong>@Model.Code</strong>
+        </summary>
+
+        <dl>
+            <br />
+            <dd>
+                <i class="fa fa-barcode" title="Code du cours"></i>
+                @Model.Code
+            </dd>
+            <dd>
+                <i class="fa fa-book" title="Titre"></i>
+                @Model.Title
+            </dd>
+            <dd>
+                <i class="fa fa-calendar-days" title="Session"></i>
+                Session @Model.Session
+            </dd>
+        </dl>
+    </details>
+
+    <hr />
+    <h3>Inscriptions</h3>
+
+    <details id="course_inscriptions_@Model.Code">
+        <summary>Étudiants inscrits</summary>
+        <div style="padding:8px;">
+            Aucun étudiant inscrit pour le moment.
+        </div>
+    </details>
+}
+else
+{
+    <h2 style="color:red">Ce cours a été effacé...</h2>
+}

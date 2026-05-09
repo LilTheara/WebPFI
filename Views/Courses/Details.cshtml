@@ -1,0 +1,60 @@
+@model Registrar.Models.Course
+@{
+    ViewBag.PageTitle = "Cours - Détails";
+    string search = Session["Search"] != null ? ((bool)Session["Search"]).ToString() : false.ToString();
+    string SearchString = Session["SearchString"] != null ? (string)Session["SearchString"] : "";
+}
+
+<div id="detailsPanel" class="detailsPanel">
+    <!-- auto refreshed -->
+</div>
+
+@section Scripts {
+    <script>
+        $(() => {
+            newSession(600);
+            courseDetails_ARP = new AutoRefreshedPanel("detailsPanel", "/Courses/GetCourseDetails", 5, courseDetailsPostRefresh);
+            sessionStorage.setItem("RestoreScrollPosition", "1");
+        })
+
+        function courseDetailsPostRefresh(fromRefresh = true) {
+            highlightKeyword();
+            RestoreDetailsState();
+        }
+
+        function highlightKeyword() {
+            if ("@search" == "True") {
+                let keyword = "@SearchString";
+                if (keyword.length > 0) {
+                    let titles = document.getElementsByClassName('courseTitle');
+                    Array.from(titles).forEach(title => {
+                        highlight(keyword, title);
+                    });
+                    let codes = document.getElementsByClassName('courseCode');
+                    Array.from(codes).forEach(code => {
+                        highlight(keyword, code);
+                    });
+                }
+            }
+        }
+
+        function RestoreDetailsState() {
+            $("details").off();
+            $("details").on('toggle', function () {
+                let details_dom = $(this)[0];
+                if (details_dom != undefined) {
+                    localStorage.setItem(details_dom.id, details_dom.open);
+                }
+            })
+
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key.indexOf("details") > -1) {
+                    let details_dom = $("#" + key)[0];
+                    if (details_dom != undefined)
+                        details_dom.open = localStorage.getItem(key) == "true";
+                }
+            }
+        }
+    </script>
+}

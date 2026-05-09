@@ -124,3 +124,32 @@ summary {
 .highlight {
     background-color: yellow;
 }
+.coursesListLayout {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.courseListLayout {
+    padding: 6px;
+    border-radius: 6px;
+}
+
+.courseListLayout:hover {
+    background-color: #f2f2f2;
+}
+
+.courseListLayout a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.courseCode {
+    min-width: 110px;
+    font-weight: bold;
+    color: dodgerblue;
+}
+
+.courseTitle {
+    flex: 1;
+}

@@ -1,0 +1,64 @@
+@model Models.Student
+@{
+	ViewBag.PageTitle = "Étudiant - Détails";
+	string search = Session["Search"] != null ? ((bool)Session["Search"]).ToString() : false.ToString();
+	string SearchString = Session["SearchString"] != null ? (string)Session["SearchString"] : "";
+}
+
+<div id="detailsPanel" class="detailsPanel">
+	<!-- auto refreshed -->
+</div>
+
+@section Scripts {
+	<script>
+        $(() => {
+            newSession(600);
+            studentDetails_ARP = new AutoRefreshedPanel("detailsPanel", "/Students/GetStudentDetails", 5, studentDetailsPostRefresh);
+            sessionStorage.setItem("RestoreScrollPosition", "1");
+        })
+
+        function studentDetailsPostRefresh(fromRefresh = true) {
+			highlightKeyword();
+			RestoreDetailsState();
+        }
+
+        function highlightKeyword() {
+            if ("@search" == "True") {
+                let keyword = "@SearchString";
+                if (keyword.length > 0) {
+                     let titles = document.getElementsByClassName('mediaTitle');
+                     Array.from(titles).forEach(title => {
+                         highlight(keyword, title);
+                     });
+                     let descriptions = document.getElementsByClassName('mediaDescription');
+                     Array.from(descriptions).forEach(description => {
+                         highlight(keyword, description);
+                     })
+                }
+            }
+        }
+		function RestoreDetailsState() {
+			//install event handler ?
+			$("details").off();
+			$("details").on('toggle', function () {
+				let details_dom = $(this)[0];
+				if (details_dom != undefined) {
+					// Save detail state
+					localStorage.setItem(details_dom.id, details_dom.open);
+				}
+			})
+			// Restore state of each details tags
+			for (let i = 0; i < localStorage.length; i++) {
+				const key = localStorage.key(i);
+				// target only keys that contains "details" string
+				if (key.indexOf("details") > -1) {
+					let details_dom = $("#" + key)[0];
+					if (details_dom != undefined)
+						// all values in localstorage are stored as string
+						details_dom.open = localStorage.getItem(key) == "true";
+					let i = 0;
+				}
+			}
+		}
+	</script>
+}

@@ -1,0 +1,36 @@
+@using System.Collections.Generic
+@using System.Linq
+@model IEnumerable<Registrar.Models.Course>
+
+@{
+    List<Registrar.Models.Course> coursesList =
+        Model != null ? Model.ToList() : new List<Registrar.Models.Course>();
+
+    List<int> sessionsList =
+        coursesList.Select(course => course.Session).Distinct().OrderBy(session => session).ToList();
+}
+
+@foreach (int session in sessionsList)
+{
+    List<Registrar.Models.Course> courses =
+        coursesList.Where(course => course.Session == session).OrderBy(course => course.Code).ToList();
+
+    if (courses.Count() > 0)
+    {
+        <details id="courses_details_@session">
+            <summary>Session @session</summary>
+
+            @foreach (Registrar.Models.Course course in courses)
+            {
+                <div class="StudentListLayout">
+                    <a href="@Url.Action("Details", "Courses", new { id = course.Id }, null)">
+                        <div style="display:flex">
+                            <span class="studentCode">@course.Code</span>
+                            <div class="studentName">@course.Title</div>
+                        </div>
+                    </a>
+                </div>
+            }
+        </details>
+    }
+}

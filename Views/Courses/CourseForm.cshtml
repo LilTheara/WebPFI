@@ -1,0 +1,65 @@
+@model Registrar.Models.Course
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <details id="course_edits_@Model.Code" open>
+        <summary>Informations - [@Model.Code]</summary>
+
+        <fieldset>
+            <legend>Code</legend>
+            <input id="Code"
+                   name="Code"
+                   class="form-control"
+                   placeholder="Code"
+                   value="@Model.Code"
+                   required
+                   RequireMessage="Veuillez entrer un code" />
+        </fieldset>
+
+        <fieldset>
+            <legend>Titre</legend>
+            <input id="Title"
+                   name="Title"
+                   class="form-control"
+                   placeholder="Titre"
+                   value="@Model.Title"
+                   required
+                   RequireMessage="Veuillez entrer un titre" />
+        </fieldset>
+
+        <fieldset>
+            <legend>Session</legend>
+            <input id="Session"
+                   name="Session"
+                   class="form-control"
+                   type="number"
+                   min="1"
+                   max="6"
+                   value="@Model.Session"
+                   required
+                   RequireMessage="Veuillez entrer une session" />
+        </fieldset>
+    </details>
+
+    <details id="course_registrations_@Model.Code">
+        <summary>Inscriptions : @NextSession.Caption</summary>
+
+        <fieldset>
+            <legend>Étudiants inscrits</legend>
+            <select class="form-control" size="10">
+                <option>Aucun étudiant inscrit pour le moment</option>
+            </select>
+        </fieldset>
+
+        <fieldset>
+            <legend>Étudiants disponibles</legend>
+            <select class="form-control" size="10">
+                <option>Aucun étudiant disponible pour le moment</option>
+            </select>
+        </fieldset>
+    </details>
+
+    <input id="submit" type="submit" value="Enregistrer" class="btn btn-primary" style="display:none">
+}

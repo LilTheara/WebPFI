@@ -110,6 +110,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccessControl.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
+    <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\StudentsController.cs" />
     <Compile Include="Controllers\NotificationsController.cs" />
     <Compile Include="DAL\AssetAttribute.cs" />
@@ -122,8 +123,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Course.cs" />
+    <Compile Include="Models\CoursesRepository.cs" />
     <Compile Include="Models\EmailView.cs" />
     <Compile Include="Models\Event.cs" />
+    <Compile Include="Models\Event1.cs" />
     <Compile Include="Models\EventsRepository.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\LoginCredential.cs" />
@@ -247,6 +251,21 @@
     <Content Include="Views\Students\Edit.cshtml" />
     <Content Include="Views\Students\StudentForm.cshtml" />
     <Content Include="Views\Students\Create.cshtml" />
+    <Content Include="Views\Courses\List.cshtml" />
+    <Content Include="Views\Courses\GetCourses.cshtml" />
+    <Content Include="Views\Courses\Details.cshtml" />
+    <Content Include="Views\Courses\GetCourseDetails.cshtml" />
+    <Content Include="Views\Students\students\Create.cshtml" />
+    <Content Include="Views\Students\students\Details.cshtml" />
+    <Content Include="Views\Students\students\Edit.cshtml" />
+    <Content Include="Views\Students\students\GetStudentDetails.cshtml" />
+    <Content Include="Views\Students\students\GetStudents.cshtml" />
+    <Content Include="Views\Students\students\GetYearsList.cshtml" />
+    <Content Include="Views\Students\students\List.cshtml" />
+    <Content Include="Views\Students\students\SetYear.cshtml" />
+    <Content Include="Views\Students\students\StudentForm.cshtml" />
+    <Content Include="Views\Courses\Edit.cshtml" />
+    <Content Include="Views\Courses\CourseForm.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

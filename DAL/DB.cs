@@ -1,5 +1,6 @@
 ﻿using EmailHandling;
 using Models;
+using Registrar.Models;
 
 namespace DAL
 {
@@ -30,5 +31,7 @@ namespace DAL
 
         static public StudentsRepository Students { get; set; }
             = new StudentsRepository();
+        public static CoursesRepository Courses { get; set; } 
+            = new CoursesRepository();
     }
 }

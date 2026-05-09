@@ -1,0 +1,57 @@
+@model Models.Student
+
+
+@using (Html.BeginForm())
+{
+	@Html.AntiForgeryToken() <!-- Injection de jeton anti contrefaçon de formulaire -->
+	<details  id="student_edits_@Model.Code">
+		<summary>Informations - [@Model.Code]</summary>
+		<fieldset>
+			<legend>Prénom</legend>
+			<input id="FirstName"
+				   name="FirstName"
+				   class="form-control"
+				   placeholder="Titre"
+				   value="@Model.FirstName"
+				   required
+				   RequireMessage="Veuillez entrer un prénom" />
+		</fieldset>
+		<fieldset>
+			<legend>Nom</legend>
+			<input id="LastName"
+				   name="LastName"
+				   class="form-control"
+				   placeholder="Titre"
+				   value="@Model.LastName"
+				   required
+				   RequireMessage="Veuillez entrer un nom" />
+		</fieldset>
+		<fieldset>
+			<legend>Date de naissance</legend>
+			<input name="Birth" class="form-control datepicker" value="@Model.BirthDate.ToString("yyyy-MM-dd")"
+				   required
+				   RequireMessage="Veuillez entrer une date"
+				   InvalidMessage="Date invalide" />
+		</fieldset>
+		<fieldset>
+			<legend>Courriel</legend>
+			<input name="Email" class="form-control Email" placeholder="Courriel" value="@Model.Email"
+				   required
+				   RequireMessage="Veuillez entrer un courriel"
+				   InvalidMessage="Courriel invalide" />
+		</fieldset>
+		<fieldset>
+			<legend>Téléphone</legend>
+			<input class="form-control Phone"
+				   name="Phone"
+				   id="Phone"
+				   placeholder="(000) 000-0000"
+				   required
+				   RequireMessage="Veuillez entrer un numéro de téléphone"
+				   InvalidMessage="Téléphone invalide"
+				   value="@Model.Phone" />
+		</fieldset>
+	</details>
+	<input id="submit" type="submit" value="Enregistrer" class="btn btn-primary" style="display:none">
+
+}

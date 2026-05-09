@@ -11,6 +11,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 
+
 namespace Registrar
 {
     public class MvcApplication : System.Web.HttpApplication
@@ -47,9 +48,9 @@ namespace Registrar
             {
                 if (renewPC.User == null) DB.RenewPasswordCommands.Delete(renewPC.Id);
             }
-            foreach (Models.Event @event in DB.Events.ToList().Copy())
+            foreach (global::Models.Event @event in DB.Events.ToList().Copy())
             {
-                if (@event.User == null) DB.RenewPasswordCommands.Delete(@event.Id);
+                if (@event.User == null) DB.Events.Delete(@event.Id);
             }
             foreach (var notification in DB.Notifications.ToList().Copy())
             {
@@ -72,7 +73,7 @@ namespace Registrar
         }
         protected void Session_End()
         {
-            var connectedUser = Models.User.ConnectedUser;
+            var connectedUser = global::Models.User.ConnectedUser;
             if (connectedUser != null)
                 connectedUser.Online = false;
         }

@@ -1,0 +1,82 @@
+@{
+    ViewBag.PageTitle = "Cours";
+    string search = Session["Search"] != null ? ((bool)Session["Search"]).ToString() : false.ToString();
+}
+
+<div id="CoursesListPanel" class="coursesListLayout">
+</div>
+
+@section Scripts {
+    <script>
+        let coursesListAutoRefreshPanel = null;
+
+        $(() => {
+            newSession(600);
+
+            coursesListAutoRefreshPanel =
+                new AutoRefreshedPanel(
+                    "CoursesListPanel",
+                    "/Courses/GetCourses",
+                    5,
+                    coursesListPostRefresh);
+
+            let keywordsOnchangeTimer = null;
+
+            $("#searchInput").on('keyup', function () {
+                clearTimeout(keywordsOnchangeTimer);
+                keywordsOnchangeTimer = setTimeout(() => {
+                    window.location = "/Courses/SetSearchString?value=" + $("#searchInput").val();
+                }, 1000);
+            });
+
+            $("#searchInput").on('search', function () {
+                clearTimeout(keywordsOnchangeTimer);
+                window.location = "/Courses/SetSearchString?value=" + $("#searchInput").val();
+            });
+
+            $("#searchInput").on("focus", function () {
+                coursesListAutoRefreshPanel.pause();
+            });
+
+            $("#searchInput").on("blur", function () {
+                coursesListAutoRefreshPanel.restart();
+            });
+
+            function coursesListPostRefresh() {
+                highlightKeyword();
+                RestoreDetailsState();
+            }
+
+            function highlightKeyword() {
+                if ("@search" == "True") {
+                    let keyword = $("#searchInput").val();
+                    if (keyword.length > 0) {
+                        let titles = document.getElementsByClassName('courseTitle');
+                        Array.from(titles).forEach(title => {
+                            highlight(keyword, title);
+                        })
+                    }
+                }
+            }
+
+            function RestoreDetailsState() {
+                $("details").off();
+                $("details").on('toggle', function () {
+                    let details_dom = $(this)[0];
+                    if (details_dom != undefined) {
+                        localStorage.setItem(details_dom.id, details_dom.open);
+                    }
+                });
+
+                for (let i = 0; i < localStorage.length; i++) {
+                    const key = localStorage.key(i);
+                    if (key.indexOf("courses_details") > -1) {
+                        let details_dom = $("#" + key)[0];
+                        if (details_dom != undefined)
+                            details_dom.open = localStorage.getItem(key) == "true";
+                    }
+                }
+            }
+        })
+    </script>
+}

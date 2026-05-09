@@ -1,0 +1,14 @@
+@model Models.Student
+@{
+	ViewBag.Action = "Edit";
+	Html.RenderPartial("StudentForm");
+	ViewBag.PageTitle = "Étudiant - Modification";
+}
+
+@section Scripts {  <!-- Cette section ne doit pas être placée dans une vue partielle -->
+	<script>$(() => {
+
+            initFormValidation();
+            addConflictValidation("/Students/CheckConflict", 'Email' /* field unicity check */, 'submit' /* form submit button Id */);
+        })</script>
+}
