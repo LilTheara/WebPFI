@@ -46,19 +46,31 @@
     <details id="course_registrations_@Model.Code">
         <summary>Inscriptions : @NextSession.Caption</summary>
 
-        <fieldset>
-            <legend>Étudiants inscrits</legend>
-            <select class="form-control" size="10">
-                <option>Aucun étudiant inscrit pour le moment</option>
-            </select>
-        </fieldset>
+        <div style="display:flex; gap:20px; margin-top:10px;">
 
-        <fieldset>
-            <legend>Étudiants disponibles</legend>
-            <select class="form-control" size="10">
-                <option>Aucun étudiant disponible pour le moment</option>
-            </select>
-        </fieldset>
+            <div style="flex:1;">
+                <div style="font-weight:bold; margin-bottom:6px;">
+                    Étudiants inscrits
+                </div>
+
+                <select class="form-control"
+                        size="12"
+                        style="height:250px; font-family:monospace;">
+                </select>
+            </div>
+
+            <div style="flex:1;">
+                <div style="font-weight:bold; margin-bottom:6px;">
+                    Étudiants disponibles
+                </div>
+
+                <select class="form-control"
+                        size="12"
+                        style="height:250px; font-family:monospace;">
+                </select>
+            </div>
+
+        </div>
     </details>
 
     <input id="submit" type="submit" value="Enregistrer" class="btn btn-primary" style="display:none">
