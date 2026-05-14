@@ -127,7 +127,6 @@
     <Compile Include="Models\CoursesRepository.cs" />
     <Compile Include="Models\EmailView.cs" />
     <Compile Include="Models\Event.cs" />
-    <Compile Include="Models\Event1.cs" />
     <Compile Include="Models\EventsRepository.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\LoginCredential.cs" />
@@ -135,6 +134,8 @@
     <Compile Include="Models\NextSession.cs" />
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\NotificationsRepository.cs" />
+    <Compile Include="Models\Registration.cs" />
+    <Compile Include="Models\RegistrationsRepository.cs" />
     <Compile Include="Models\RenewPasswordView.cs" />
     <Compile Include="Models\SelectListUtilities.cs" />
     <Compile Include="Models\Student.cs" />

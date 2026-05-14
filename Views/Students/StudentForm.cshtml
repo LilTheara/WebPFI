@@ -4,7 +4,7 @@
 @using (Html.BeginForm())
 {
 	@Html.AntiForgeryToken() <!-- Injection de jeton anti contrefaçon de formulaire -->
-	<details  id="student_edits_@Model.Code">
+	<details id="student_edits_@Model.Code">
 		<summary>Informations - [@Model.Code]</summary>
 		<fieldset>
 			<legend>Prénom</legend>
@@ -52,6 +52,7 @@
 				   value="@Model.Phone" />
 		</fieldset>
 	</details>
+	
 	<input id="submit" type="submit" value="Enregistrer" class="btn btn-primary" style="display:none">
 
 }

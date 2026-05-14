@@ -1,4 +1,8 @@
 @model Models.Student
+@{
+	/* List of years wich has at least one subscribed course */
+	var yearsList = ((List<int>)Session["RegistrationsYearsList"]).OrderByDescending(i => i);
+}
 
 @if (Model != null)
 {
@@ -30,6 +34,16 @@
 	</details>
 	<hr />
 	<h3>Inscriptions</h3>
+	foreach (var year in yearsList)
+	{
+		var courses = Model.Registrations.Where(c => c.Year == year);
+		if(courses.Count() > 0)
+		{
+			<details id="student_details_@Model.Code">
+
+			</details>
+		}
+	}
 }
 else
 {

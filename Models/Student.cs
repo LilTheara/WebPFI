@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using DAL;
 using Newtonsoft.Json;
+using Registrar.Models;
 
 namespace Models
 {
@@ -20,9 +21,36 @@ namespace Models
 		[JsonIgnore] public string FullName => LastName + " " + FirstName;
 		[JsonIgnore] public string Caption => Code + " " + LastName + " " + FirstName;
 		[JsonIgnore] public int Year => int.Parse(Code.Substring(0, 4));
-		//[JsonIgnore] public SelectList StudentsSelectList => SelectListUtilities<Student>.Convert(Students, "Caption");
-		//[JsonIgnore]
-		//public SelectList NextSessionStudentsToSelectList => SelectListUtilities<Student>.Convert(NextSessionStudents, "Caption");
+		[JsonIgnore] public List<Registration> Registrations => DB.Registrations.ToList().Where(r => r.StudentId == Id).ToList();
+		[JsonIgnore] public List<Registration> NextSessionRegistrations => DB.Registrations.ToList().Where(r => r.StudentId == Id && r.isNextSession).ToList();
+		[JsonIgnore]
+		public List<Student> Students
+		{
+			get {
+				var students = new List<Student>();
+				foreach (var registration in Registrations.OrderBy(r => r.Student.Code))
+				{
+					students.Add(registration.Student);
+				}
+				return students;
+			}
+		}
+		[JsonIgnore]
+		public List<Student> NextSessionStudents
+		{
+			get
+			{
+				var students = new List<Student>();
+				foreach (var registration in NextSessionRegistrations.OrderBy(r => r.Student.Code))
+				{
+					students.Add(registration.Student);
+				}
+				return students;
+			}
+		}
+		[JsonIgnore] public SelectList StudentsSelectList => SelectListUtilities<Student>.Convert(Students, "Caption");
+		[JsonIgnore]
+		public SelectList NextSessionStudentsToSelectList => SelectListUtilities<Student>.Convert(NextSessionStudents, "Caption");
 		public override bool IsValid()
 		{
 			if (!HasRequiredLength(FirstName, 1)) return false;
@@ -31,6 +59,21 @@ namespace Models
 			if(!IsPhone(Phone)) return false;
 			if (DB.Students.ToList().Where(m => m.Code == Code && m.Id != Id).Any()) return false;
 			return true;
+		}
+		public void DeleteAllRegistrations(){
+			foreach (Registration registration in Registrations)
+				DB.Registrations.Delete(registration.Id);
+		}
+		public void DeleteNextSessionRegistrations() {
+			foreach (Registration registration in NextSessionRegistrations)
+				DB.Registrations.Delete(registration.Id);
+		}
+		public void UpdateRegistrations(List<int> selectedCoursesId)
+		{
+			DeleteNextSessionRegistrations();
+			if(selectedCoursesId != null)
+				foreach (int courseId in selectedCoursesId)
+					DB.Registrations.Add(new Registration { StudentId = Id, CourseId = courseId });
 		}
 	}
 }
