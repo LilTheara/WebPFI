@@ -38,6 +38,7 @@ namespace Controllers
 			if (Session["pageSize"] == null) Session["pageSize"] = 3;
 			if (Session["EndOfStudents"] == null) Session["EndOfStudents"] = false;
 			if (Session["StudentsYearsList"] == null) Session["StudentsYearsList"] = DB.Students.Years();
+			if (Session["RegistrationsYearsList"] == null) Session["RegistrationsYearsList"] = DB.Registrations.Years();
 		}
 		private List<Student> _getItems(int index, int nbItems)
 		{
