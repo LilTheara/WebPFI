@@ -1,6 +1,6 @@
 ﻿using DAL;
 using Models;
-using Registrar.Models;
+using Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;

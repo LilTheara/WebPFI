@@ -1,0 +1,15 @@
+@model Models.Teacher
+@{
+	ViewBag.Action = "Edit";
+	Html.RenderPartial("TeacherForm");
+	ViewBag.PageTitle = "Prof - Modification";
+}
+
+@section Scripts {  <!-- Cette section ne doit pas être placée dans une vue partielle -->
+	<script>$(() => {
+			initUI();
+
+            initFormValidation();
+            addConflictValidation("/Teachers/CheckConflict", 'Email' /* field unicity check */, 'submit' /* form submit button Id */);
+        })</script>
+}

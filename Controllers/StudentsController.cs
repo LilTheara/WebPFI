@@ -221,14 +221,17 @@ namespace Controllers
 		{
 			try
 			{
-				Session["RegistrationsYearsList"] = DB.Registrations.Years();
-				InitSessionVariables();
-
-				int studentId = (int)Session["CurrentStudentId"];
-				Student student = DB.Students.Get(studentId);
-				if (DB.Students.HasChanged || forceRefresh)
+				if (DB.Students.HasChanged || DB.Registrations.HasChanged || forceRefresh)
 				{
-					return PartialView(student);
+					Session["RegistrationsYearsList"] = DB.Registrations.Years();
+					InitSessionVariables();
+
+					int studentId = (int)Session["CurrentStudentId"];
+					Student student = DB.Students.Get(studentId);
+					if (DB.Students.HasChanged || forceRefresh)
+					{
+						return PartialView(student);
+					}
 				}
 				return null;
 			}

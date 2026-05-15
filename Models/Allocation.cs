@@ -2,23 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Web.Mvc;
 using DAL;
-using Newtonsoft.Json;
 using Models;
+using Newtonsoft.Json;
 
 namespace Models
 {
-	public class Registration : Record
+	public class Allocation : Record
 	{
-		public Registration() {
+		public Allocation()
+		{
 			Year = NextSession.Year;
 		}
-		public int StudentId { get; set; }
+		public int TeacherId { get; set; }
 		public int CourseId { get; set; }
 		public int Year { get; set; }
 		[JsonIgnore]
-		public Student Student => DB.Students.Get(StudentId);
+		public Teacher Teacher => DB.Teachers.Get(TeacherId);
 		[JsonIgnore]
 		public Course Course => DB.Courses.Get(CourseId);
 		[JsonIgnore]

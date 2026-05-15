@@ -2,6 +2,7 @@
 	string session = ViewBag.Session;
 	int year = (int)ViewBag.Year;
 	bool automnCheck = session == "Automne";
+	ViewBag.PageTitle = "Session Courante";
 }
 <form action="/Students/SetYear" method="post">
 	<div style="color:dodgerblue;font-size:1.0em;">Choisissez l'année et la session pour les prochaines allocations de cours : </div>

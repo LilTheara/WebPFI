@@ -9,6 +9,10 @@ namespace Models
 {
 	public class StudentsRepository : Repository<Student>
 	{
+		public override int Add(Student student){
+			student.Code = Student.GenerateCode();
+			return base.Add(student);
+		}
 		public List<int> Years()
 		{
 			List<int> Years = new List<int>();
