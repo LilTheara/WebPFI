@@ -1,20 +1,66 @@
 @model Models.Teacher
+@{
+	var yearsList = ((List<int>)Session["RegistrationsYearsList"]).OrderByDescending(i => i);
+}
 
 @if (Model != null)
 {
     <details id="teacher_details_@Model.Code" open>
         <summary>
-            <img src="@Model.Avatar" style="width:28px; height:28px; border-radius:50%; object-fit:cover;" />
             <strong>@Model.LastName @Model.FirstName</strong>
         </summary>
 
         <dl>
-            <br />
-            <dd>@Model.Code</dd>
-            <dd>@Model.Phone</dd>
-            <dd>Depuis le @Model.StartDate.ToString("dd MMMM yyyy")</dd>
-        </dl>
+			<br />
+			<dd>
+				<i class="fa fa-barcode" title="Code permanent"></i>
+				@Model.Code
+			</dd>
+			<dd>
+				<i class="fa fa-phone" title="Téléphone"></i>
+				@Model.Phone
+			</dd>
+			<dd>
+				<i class="fa fa-paper-plane" title="Courriel"></i>
+				@Model.Email
+			</dd>
+			<br />
+			<dd>
+				<span>Embauché le 
+				@Model.StartDate.ToString("dd MMMM yyyy")</span>
+			</dd>
+			<dd>
+				<img src="@Model.Avatar" style="width:36px; height:36px; border-radius:50%; object-fit:cover;" />
+			</dd>
+		</dl>
     </details>
+	<h3>Allocations</h3>
+	foreach (var year in yearsList)
+	{
+		var courses = Model.Allocations.Where(c => c.Year == year);
+		if(courses.Count() > 0)
+		{
+			<details id="teachers_details_inscriptions_@Model.Code">
+				<summary>
+					<strong>@year</strong>
+				</summary>
+				@foreach (var course in courses) {
+					<div class="CoursesListLayout">
+						<a href="@Url.Action("Details", new{ id = course.CourseId })">
+							<div style="display:flex">
+								<div style="color: grey">[@course.Course.Session] </div>
+								<span class="courseCode">@course.Course.Code</span>
+								<div class="studentName">@course.Course.Title</div>
+							</div>
+						</a>
+					</div>
+				}
+			</details>
+		}
+		else {
+			<span style="color:grey">Le prof n'est inscrit à aucun cours</span>
+		}
+	}
 }
 else
 {

@@ -59,7 +59,6 @@ namespace Models
 		{
 			if (!HasRequiredLength(FirstName, 1)) return false;
 			if (!HasRequiredLength(LastName, 1)) return false;
-			if (!IsEmail(Email)) return false;
 			return true;
 		}
 		public void DeleteAllAllocations()

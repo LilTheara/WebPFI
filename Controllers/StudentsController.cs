@@ -181,6 +181,10 @@ namespace Controllers
 			DB.Events.Add("Illegal Edit Student");
 			return Redirect("/Accounts/Login?message=Erreur de modification de Student!&success=false");
 		}
+		public ActionResult About()
+		{
+			return View();
+		}
 		public JsonResult CheckConflict(string Email)
 		{
 			int id = Session["CurrentStudentId"] != null ? (int)Session["CurrentStudentId"] : 0;
