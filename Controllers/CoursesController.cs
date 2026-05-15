@@ -1,6 +1,6 @@
 ﻿using DAL;
 using Models;
-using Registrar.Models;
+using Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ using System.Web.Mvc;
 using static Controllers.AccessControl;
 
 
-namespace Registrar.Controllers
+namespace Controllers
 {
 
     [UserAccess(Access.View)]

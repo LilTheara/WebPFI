@@ -6,7 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using DAL;
 using Newtonsoft.Json;
-using Registrar.Models;
+using Models;
 
 namespace Models
 {

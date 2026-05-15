@@ -124,6 +124,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Allocation.cs" />
+    <Compile Include="Models\AllocationsRepository.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\CoursesRepository.cs" />
     <Compile Include="Models\EmailView.cs" />
@@ -275,6 +277,9 @@
     <Content Include="Views\Teachers\List.cshtml" />
     <Content Include="Views\Teachers\GetTeachers.cshtml" />
     <Content Include="Views\Teachers\Details.cshtml" />
+    <Content Include="Views\Teachers\Create.cshtml" />
+    <Content Include="Views\Teachers\Edit.cshtml" />
+    <Content Include="Views\Teachers\TeacherForm.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
