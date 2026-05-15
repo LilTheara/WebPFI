@@ -13,8 +13,7 @@ namespace Models
         public string Title { get; set; }
         public int Session { get; set; }
 
-        [JsonIgnore]
-        public string Caption => Code + " " + Title;
+        [JsonIgnore] public string Caption => "[" + Session + "] " + Code + " " + Title;
 
         [JsonIgnore]
         public List<Registration> Registrations =>
@@ -30,10 +29,8 @@ namespace Models
             get
             {
                 var students = new List<Student>();
-                foreach (var registration in Registrations.OrderBy(r => r.Student.Code))
-                {
+                foreach (Registration registration in Registrations.OrderBy(r => r.Student.Code))
                     students.Add(registration.Student);
-                }
                 return students;
             }
         }
@@ -44,11 +41,26 @@ namespace Models
             get
             {
                 var students = new List<Student>();
-                foreach (var registration in NextSessionRegistrations.OrderBy(r => r.Student.Code))
-                {
+                foreach (Registration registration in NextSessionRegistrations.OrderBy(r => r.Student.Code))
                     students.Add(registration.Student);
-                }
                 return students;
+            }
+        }
+
+        public void DeleteNextSessionRegistrations()
+        {
+            foreach (Registration registration in NextSessionRegistrations)
+                DB.Registrations.Delete(registration.Id);
+        }
+
+        public void UpdateRegistrations(List<int> selectedStudentsId)
+        {
+            DeleteNextSessionRegistrations();
+
+            if (selectedStudentsId != null)
+            {
+                foreach (int studentId in selectedStudentsId)
+                    DB.Registrations.Add(new Registration { StudentId = studentId, CourseId = Id });
             }
         }
 
@@ -73,23 +85,6 @@ namespace Models
         {
             foreach (Registration registration in Registrations)
                 DB.Registrations.Delete(registration.Id);
-        }
-
-        public void DeleteNextSessionRegistrations()
-        {
-            foreach (Registration registration in NextSessionRegistrations)
-                DB.Registrations.Delete(registration.Id);
-        }
-
-        public void UpdateRegistrations(List<int> selectedStudentsId)
-        {
-            DeleteNextSessionRegistrations();
-
-            if (selectedStudentsId != null)
-            {
-                foreach (int studentId in selectedStudentsId)
-                    DB.Registrations.Add(new Registration { StudentId = studentId, CourseId = Id });
-            }
         }
     }
 }

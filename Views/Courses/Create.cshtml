@@ -1,6 +1,7 @@
-@model Registrar.Models.Course
+@model Models.Course
 
 @{
     ViewBag.Action = "Create";
-    Html.RenderPartial("CourseForm", Model);
 }
+
+@Html.Partial("CourseForm", Model)

@@ -137,7 +137,7 @@ namespace Registrar.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken()]
         [UserAccess(Access.Write)]
-        public ActionResult Edit(Course course)
+        public ActionResult Edit(Course course, List<int> SelectedStudents)
         {
             int id = Session["CurrentCourseId"] != null ? (int)Session["CurrentCourseId"] : 0;
 
@@ -146,11 +146,15 @@ namespace Registrar.Controllers
             if (storedCourse != null)
             {
                 course.Id = id;
-                DB.Courses.Update(course);
-                return RedirectToAction("Details/" + id);
+
+                if (course.IsValid())
+                {
+                    DB.Courses.Update(course, SelectedStudents);
+                    return RedirectToAction("Details/" + id);
+                }
             }
 
-            return RedirectToAction("List");
+            return Redirect("/Accounts/Login?message=Erreur de modification de Course!&success=false");
         }
         [UserAccess(Access.Write)]
         public ActionResult Create()

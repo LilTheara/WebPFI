@@ -1,8 +1,1 @@
-[
-	{
-		"StudentId": 12,
-		"CourseId": 25,
-		"Year": 2026,
-		"Id": 1
-	}
-]
+[{"StudentId":12,"CourseId":25,"Year":2026,"Id":1}]
