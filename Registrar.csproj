@@ -152,24 +152,7 @@
     <Compile Include="WebServices\GeoLocation.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Assets\teachers\bc2be815-cd3d-459d-a312-49e60229c80c.jpeg" />
-    <Content Include="App_Assets\teachers\c00b3008-a41a-4586-a338-1a589256b1bd.jpeg" />
-    <Content Include="App_Assets\teachers\c7a24783-6cbd-4583-a094-a72f2ac2e389.jpeg" />
-    <Content Include="App_Assets\teachers\f4e08e66-6485-4c73-b1f8-52edae4f497a.jpeg" />
-    <Content Include="App_Assets\teachers\f9a42fd9-87e4-41d6-87c6-50fa3526db49.jpeg" />
-    <Content Include="App_Assets\teachers\fbb51b24-2763-4d30-b175-6a78856ade4b.jpeg" />
-    <Content Include="App_Assets\teachers\no_avatar.png" />
-    <Content Include="App_Assets\Users\13070465-e361-4d69-9073-06ebeb3c64ad.jpeg" />
-    <Content Include="App_Assets\Users\156ab756-729a-4dc9-ae1d-cdda8ccfd00d.jpeg" />
-    <Content Include="App_Assets\Users\32705cf0-2e95-4362-bce7-7d77cb8d4b84.jpeg" />
-    <Content Include="App_Assets\Users\3b8cc315-9869-4eeb-acb0-9f539b33758a.jpeg" />
-    <Content Include="App_Assets\Users\3b8cc315-9869-4eeb-acb0-9f539b33758aX.jpeg" />
-    <Content Include="App_Assets\Users\42c2ab89-8bff-457f-9592-0e2321b08511.jpeg" />
-    <Content Include="App_Assets\Users\67e02a94-2b82-4d76-8396-9cac4db7308d.png" />
-    <Content Include="App_Assets\Users\8b12ca6f-f732-440c-b7db-ccb07e1fdcae.png" />
-    <Content Include="App_Assets\Users\a85fbd9a-5340-4053-a4c5-c7d491df7afe.jpeg" />
-    <Content Include="App_Assets\Users\no_avatar.png" />
-    <Content Include="App_Data\iso-3166.txt" />
+    <Content Include="App_Code\Helper.cshtml" />
     <Content Include="Content\Accounts.css" />
     <Content Include="Content\Courses.css" />
     <Content Include="Content\Icons.css" />
@@ -223,17 +206,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="App_Code\Helper.cshtml" />
-    <Content Include="App_Data\Courses.json" />
-    <Content Include="App_Data\Events.json" />
-    <Content Include="App_Data\Logins.json" />
-    <Content Include="App_Data\Notifications.json" />
-    <Content Include="App_Data\RenewPasswordCommands.json" />
-    <Content Include="App_Data\Students.json" />
-    <Content Include="App_Data\Teachers.json" />
-    <Content Include="App_Data\UnverifiedEmails.json" />
-    <Content Include="App_Data\Users.json" />
-    <Content Include="App_Data\Registrations.json" />
     <None Include="packages.config" />
     <Content Include="Views\Shared\_header.cshtml" />
     <Content Include="Views\Accounts\Login.cshtml" />
@@ -262,15 +234,6 @@
     <Content Include="Views\Courses\GetCourses.cshtml" />
     <Content Include="Views\Courses\Details.cshtml" />
     <Content Include="Views\Courses\GetCourseDetails.cshtml" />
-    <Content Include="Views\Students\students\Create.cshtml" />
-    <Content Include="Views\Students\students\Details.cshtml" />
-    <Content Include="Views\Students\students\Edit.cshtml" />
-    <Content Include="Views\Students\students\GetStudentDetails.cshtml" />
-    <Content Include="Views\Students\students\GetStudents.cshtml" />
-    <Content Include="Views\Students\students\GetYearsList.cshtml" />
-    <Content Include="Views\Students\students\List.cshtml" />
-    <Content Include="Views\Students\students\SetYear.cshtml" />
-    <Content Include="Views\Students\students\StudentForm.cshtml" />
     <Content Include="Views\Courses\Edit.cshtml" />
     <Content Include="Views\Courses\CourseForm.cshtml" />
     <Content Include="Views\Courses\Create.cshtml" />
@@ -282,6 +245,7 @@
     <Content Include="Views\Teachers\TeacherForm.cshtml" />
     <Content Include="Views\Teachers\GetTeacherDetails.cshtml" />
     <None Include="Properties\PublishProfiles\Registrar202477720 - Web Deploy.pubxml" />
+    <Content Include="Views\Students\About.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
