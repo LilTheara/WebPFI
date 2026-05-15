@@ -116,5 +116,71 @@ namespace Controllers
             Session["SearchString"] = value == null ? "" : value.ToLower();
             return RedirectToAction("List");
         }
-    }
+
+		[UserAccess(Models.Access.Write)]
+		public ActionResult Delete()
+		{
+			int id = Session["CurrentTeacherId"] != null ? (int)Session["CurrentTeacherId"] : 0;
+			if (id != 0)
+			{
+				DB.Teachers.Delete(id);
+			}
+			return RedirectToAction("List");
+		}
+		[UserAccess(Access.Write)]
+		public ActionResult Create()
+		{
+			return View(new Teacher());
+		}
+
+		[HttpPost]
+		[UserAccess(Access.Write)]
+		[ValidateAntiForgeryToken()]
+		public ActionResult Create(Teacher teacher)
+		{
+			if (teacher.IsValid())
+			{
+				DB.Teachers.Add(teacher);
+				DB.Events.Add("Create", teacher.FullName);
+				return RedirectToAction("List");
+			}
+			DB.Events.Add("Illegal Create Teacher");
+			return Redirect("/Accounts/Login?message=Erreur de creation de Teacher!&success=false");
+		}
+		[UserAccess(Access.Write)]
+		public ActionResult Edit()
+		{
+			int id = Session["CurrentTeacherId"] != null ? (int)Session["CurrentTeacherId"] : 0;
+			Teacher teacher = DB.Teachers.Get(id);
+			if (teacher != null)
+			{
+				if (Models.User.ConnectedUser.Access >= Access.Write || Models.User.ConnectedUser.IsAdmin)
+					return View(teacher);
+			}
+
+			return Redirect("/Accounts/Login?message=Accès illégal! &success=false");
+		}
+
+		[UserAccess(Access.Write)]
+		[HttpPost]
+		[ValidateAntiForgeryToken()]
+		public ActionResult Edit(Teacher teacher, List<int> SelectedCourses)
+		{
+			int id = Session["CurrentTeacherId"] != null ? (int)Session["CurrentTeacherId"] : 0;
+
+			Teacher storedTeacher = DB.Teachers.Get(id);
+			if (storedTeacher != null)
+			{
+				teacher.Id = id;
+
+				if (teacher.IsValid())
+				{
+					DB.Teachers.Update(teacher, SelectedCourses);
+					return RedirectToAction("Details/" + id);
+				}
+			}
+			DB.Events.Add("Illegal Edit Teacher");
+			return Redirect("/Accounts/Login?message=Erreur de modification de Teacher!&success=false");
+		}
+	}
 }

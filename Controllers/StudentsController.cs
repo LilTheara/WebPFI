@@ -18,17 +18,9 @@ namespace Controllers
 			// Session is a dictionary that hold keys values specific to a session
 			// Each user of this web application have their own Session
 			// A Session has a default time out of 20 minutes, after time out it is cleared
-
-			//if (Session["CurrentMediaId"] == null) Session["CurrentMediaId"] = 0;
-			//if (Session["CurrentMediaTitle"] == null) Session["CurrentMediaTitle"] = "";
 			if (Session["Search"] == null) Session["Search"] = false;
 			if (Session["SearchString"] == null) Session["SearchString"] = "";
 			if (Session["SelectedYear"] == null) Session["SelectedYear"] = 0;
-			//if (Session["Categories"] == null) Session["Categories"] = DB.Medias.MediasCategories();
-			//if (Session["SortByTitle"] == null) Session["SortByTitle"] = true;
-			//if (Session["MediaSortBy"] == null) Session["MediaSortBy"] = MediaSortBy.PublishDate;
-			//if (Session["SortAscending"] == null) Session["SortAscending"] = false;
-			//if (Session["SelectedOwnerId"] == null) Session["SelectedOwnerId"] = 0;
 
 			ValidateSelectedYear();
 
