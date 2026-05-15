@@ -224,6 +224,7 @@ namespace Controllers
 		{
 			try
 			{
+				Session["RegistrationsYearsList"] = DB.Registrations.Years();
 				InitSessionVariables();
 
 				int studentId = (int)Session["CurrentStudentId"];

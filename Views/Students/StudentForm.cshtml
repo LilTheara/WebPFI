@@ -1,5 +1,8 @@
 @model Models.Student
-
+@{
+	bool createMode = Model.Id == 0;
+	string pageTitle = createMode ? "Add Student" : "Edit Student";
+}
 
 @using (Html.BeginForm())
 {
@@ -52,20 +55,14 @@
 				   value="@Model.Phone" />
 		</fieldset>
 	</details>
-	@if(ViewBag.Edit == true)
+	if (!createMode)
 	{
-		var courses = Model.CoursesSelectList;
+		var courses = Model.CoursesToSeleclist();
 		var allCourses = DAL.DB.Courses.ToSelectList();
-		<details id="student_edits_inscriptions_@Model.Code">
-			<summary>Inscriptions : @NextSession.Caption</summary>
-			<fieldset>
-				<div class="legend">
-					@Html.Label("Acteurs")
-				</div>
-				@Helper.SelectionLists("SelectedActors", courses, allCourses)
-			</fieldset>
-		</details>
+		<fieldset>
+			@Helper.SelectionLists("SelectedCourses", courses, allCourses)
+		</fieldset>
 	}
-	<input id="submit" type="submit" value="Enregistrer" class="btn btn-primary" style="display:none">
+		<input id="submit" type="submit" value="Enregistrer" class="btn btn-primary" style="display:none">
 
-}
+	}

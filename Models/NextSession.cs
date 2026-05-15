@@ -11,7 +11,23 @@ namespace Models
 		public const int August = 8; // month limit for autumn registrations
 		private static readonly NextSession instance = new NextSession();
 		public static NextSession Instance => instance;
-		public static DateTime CurrentDate = DateTime.Now;
+		public static DateTime CurrentDate
+		{
+			get
+			{
+				if (HttpContext.Current.Session != null)
+				{
+					if (HttpContext.Current.Session["CurrentDate"] == null)
+						HttpContext.Current.Session["CurrentDate"] = DateTime.Now;
+					return (DateTime)HttpContext.Current.Session["CurrentDate"];
+				}
+				return DateTime.Now;
+			}
+			set
+			{
+				HttpContext.Current.Session["CurrentDate"] = value;
+			}
+		}
 		static public List<int> ValidSessions{
 			get{
 				List<int> result = new List<int>();
