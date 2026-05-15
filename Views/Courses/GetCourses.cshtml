@@ -1,10 +1,10 @@
 @using System.Collections.Generic
 @using System.Linq
-@model IEnumerable<Registrar.Models.Course>
+@model IEnumerable<Models.Course>
 
 @{
-    List<Registrar.Models.Course> coursesList =
-        Model != null ? Model.ToList() : new List<Registrar.Models.Course>();
+    List<Models.Course> coursesList =
+        Model != null ? Model.ToList() : new List<Models.Course>();
 
     List<int> sessionsList =
         coursesList.Select(course => course.Session).Distinct().OrderBy(session => session).ToList();
@@ -12,7 +12,7 @@
 
 @foreach (int session in sessionsList)
 {
-    List<Registrar.Models.Course> courses =
+    List<Models.Course> courses =
         coursesList.Where(course => course.Session == session).OrderBy(course => course.Code).ToList();
 
     if (courses.Count() > 0)
@@ -20,7 +20,7 @@
         <details id="courses_details_@session">
             <summary>Session @session</summary>
 
-            @foreach (Registrar.Models.Course course in courses)
+            @foreach (Models.Course course in courses)
             {
                 <div class="StudentListLayout">
                     <a href="@Url.Action("Details", "Courses", new { id = course.Id }, null)">

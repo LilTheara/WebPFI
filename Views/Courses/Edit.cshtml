@@ -1,6 +1,16 @@
-@model Registrar.Models.Course
+@model Models.Course
 
 @{
     ViewBag.Action = "Edit";
-    Html.RenderPartial("CourseForm");
+}
+
+@Html.Partial("CourseForm", Model)
+
+@section Scripts {
+    <script>
+        $(() => {
+            initFormValidation();
+            initFormUtilities();
+        })
+    </script>
 }
