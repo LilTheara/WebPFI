@@ -158,15 +158,13 @@ namespace Controllers
 		public ActionResult Edit()
 		{
 			int id = Session["CurrentStudentId"] != null ? (int)Session["CurrentStudentId"] : 0;
-			if (id != 0)
-			{
-				Student student = DB.Students.Get(id);
+			Student student = DB.Students.Get(id);
 				if (student != null)
 				{
 					if (Models.User.ConnectedUser.Access >= Access.Write || Models.User.ConnectedUser.IsAdmin)
 						return View(student);
 				}
-			}
+			
 			return Redirect("/Accounts/Login?message=Accès illégal! &success=false");
 		}
 

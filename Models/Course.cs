@@ -13,7 +13,8 @@ namespace Models
         public string Title { get; set; }
         public int Session { get; set; }
 
-        [JsonIgnore] public string Caption => "[" + Session + "] " + Code + " " + Title;
+        [JsonIgnore]
+        public string Caption => "[" + Session + "] " + Code + " " + Title;
 
         [JsonIgnore]
         public List<Registration> Registrations =>
@@ -29,8 +30,10 @@ namespace Models
             get
             {
                 var students = new List<Student>();
-                foreach (Registration registration in Registrations.OrderBy(r => r.Student.Code))
+                foreach (var registration in Registrations.OrderBy(r => r.Student.Code))
+                {
                     students.Add(registration.Student);
+                }
                 return students;
             }
         }
@@ -41,10 +44,34 @@ namespace Models
             get
             {
                 var students = new List<Student>();
-                foreach (Registration registration in NextSessionRegistrations.OrderBy(r => r.Student.Code))
+                foreach (var registration in NextSessionRegistrations.OrderBy(r => r.Student.Code))
+                {
                     students.Add(registration.Student);
+                }
                 return students;
             }
+        }
+
+        [JsonIgnore]
+        public SelectList StudentsSelectList =>
+            SelectListUtilities<Student>.Convert(Students, "Caption");
+
+        [JsonIgnore]
+        public SelectList NextSessionStudentsToSelectList =>
+            SelectListUtilities<Student>.Convert(NextSessionStudents, "Caption");
+
+        public override bool IsValid()
+        {
+            if (!HasRequiredLength(Code, 1)) return false;
+            if (!HasRequiredLength(Title, 1)) return false;
+            if (Session < 1 || Session > 6) return false;
+            return true;
+        }
+
+        public void DeleteAllRegistrations()
+        {
+            foreach (Registration registration in Registrations)
+                DB.Registrations.Delete(registration.Id);
         }
 
         public void DeleteNextSessionRegistrations()
@@ -62,29 +89,6 @@ namespace Models
                 foreach (int studentId in selectedStudentsId)
                     DB.Registrations.Add(new Registration { StudentId = studentId, CourseId = Id });
             }
-        }
-
-        [JsonIgnore]
-        public SelectList StudentsSelectList =>
-            SelectListUtilities<Student>.Convert(Students, "Caption");
-
-        [JsonIgnore]
-        public SelectList NextSessionStudentsToSelectList =>
-            SelectListUtilities<Student>.Convert(NextSessionStudents, "Caption");
-
-        public override bool IsValid()
-        {
-            if (!HasRequiredLength(Code, 1)) return false;
-            if (!HasRequiredLength(Title, 1)) return false;
-            if (Session < 1 || Session > 6) return false;
-            if (DB.Courses.ToList().Where(c => c.Code == Code && c.Id != Id).Any()) return false;
-            return true;
-        }
-
-        public void DeleteAllRegistrations()
-        {
-            foreach (Registration registration in Registrations)
-                DB.Registrations.Delete(registration.Id);
         }
     }
 }

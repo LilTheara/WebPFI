@@ -61,7 +61,7 @@
 		var courses = Model.CoursesToSeleclist();
 		var allCourses = DAL.DB.Courses.ToSelectList();
 		<details style="display: block; width: 100%;">
-			<summary>Inscriptions : Session @NextSession.Caption</summary>
+			<summary>Inscriptions : @NextSession.Caption</summary>
 			<fieldset>
 				@Helper.SelectionLists("SelectedCourses", courses, allCourses)
 			</fieldset>
