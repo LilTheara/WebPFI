@@ -1,0 +1,18 @@
+@model Registrar.Models.Teacher
+
+@{
+    ViewBag.PageTitle = "Prof - Détails";
+}
+
+<div id="TeacherDetailsPanel" class="detailsPanel">
+</div>
+
+@section Scripts {
+    <script>
+        $(() => {
+            newSession(600);
+            teacherDetailsPanel =
+                new AutoRefreshedPanel("TeacherDetailsPanel", "/Teachers/GetTeacherDetails", 5);
+        })
+    </script>
+}

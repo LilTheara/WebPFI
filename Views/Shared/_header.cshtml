@@ -44,7 +44,7 @@
                 </a>
             }
         </div>
-        <!-- Direct action context command icons -->
+
         @switch (action)
         {
             case "login": break;
@@ -69,13 +69,13 @@
 
                     <a href="/@controller/ToggleSearch" class="cmdIcon fa fa-search" title="Recherche..."></a>
 
-                    <!-- Dropdown menu -->
+
                     <div id="menu" class="dropdown ms-auto">
-                        <!-- Drop down menu acces icon -->
+
                         <div data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="cmdIcon fa fa-bars" title="Menu"></i>
                         </div>
-                        <!-- Drop down menu items -->
+
                         <div class="dropdown-menu noselect" id="DDMenu" style="width:300px !important">
                             <div class="dropdown-item item-layout">
                                 <i class="menuIcon fa fa-address-card"></i>
@@ -175,7 +175,7 @@
         @if (controller == "students")
         {
             <div id="yearSelectPanel" class="flexItem">
-                <!-- Dynamically refreshed -->
+
                 @{ Html.RenderPartial("GetYearsList"); }
             </div>
         }

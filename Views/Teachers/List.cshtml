@@ -1,0 +1,54 @@
+@{
+    ViewBag.PageTitle = "Profs";
+    string search = Session["Search"] != null ? ((bool)Session["Search"]).ToString() : false.ToString();
+    string SearchString = Session["SearchString"] != null ? (string)Session["SearchString"] : "";
+}
+
+<div id="TeachersListPanel">
+</div>
+
+@section Scripts {
+    <script>
+        $(() => {
+            newSession(600);
+
+            teachersListPanel =
+                new AutoRefreshedPanel("TeachersListPanel", "/Teachers/GetTeachers", 5, teachersListPostRefresh);
+
+            let keywordsOnchangeTimer = null;
+
+            $("#searchInput").on('keyup', function () {
+                clearTimeout(keywordsOnchangeTimer);
+                keywordsOnchangeTimer = setTimeout(() => {
+                    window.location = "/Teachers/SetSearchString?value=" + $("#searchInput").val();
+                }, 1000);
+            });
+
+            $("#searchInput").on('search', function () {
+                clearTimeout(keywordsOnchangeTimer);
+                window.location = "/Teachers/SetSearchString?value=" + $("#searchInput").val();
+            });
+
+            function teachersListPostRefresh() {
+                highlightKeyword();
+            }
+
+            function highlightKeyword() {
+                if ("@search" == "True") {
+                    let keyword = "@SearchString";
+                    if (keyword.length > 0) {
+                        let names = document.getElementsByClassName('teacherName');
+                        Array.from(names).forEach(name => {
+                            highlight(keyword, name);
+                        });
+
+                        let codes = document.getElementsByClassName('teacherCode');
+                        Array.from(codes).forEach(code => {
+                            highlight(keyword, code);
+                        });
+                    }
+                }
+            }
+        })
+    </script>
+}

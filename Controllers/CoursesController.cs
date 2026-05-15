@@ -152,6 +152,20 @@ namespace Registrar.Controllers
 
             return RedirectToAction("List");
         }
+        [UserAccess(Access.Write)]
+        public ActionResult Create()
+        {
+            return View(new Course());
+        }
+
+        [HttpPost]
+        [UserAccess(Access.Write)]
+        [ValidateAntiForgeryToken()]
+        public ActionResult Create(Course course)
+        {
+            DB.Courses.Add(course);
+            return RedirectToAction("List");
+        }
 
     }
 }

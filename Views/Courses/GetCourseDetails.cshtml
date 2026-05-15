@@ -2,37 +2,46 @@
 
 @if (Model != null)
 {
-    <details id="course_details_@Model.Code" open>
-        <summary>
-            <i class="fa-solid fa-book"></i>
-            <strong>@Model.Code</strong>
-        </summary>
+    <div>
+        <div style="font-size:1.3em; font-weight:500;">
+            @Model.Code
+        </div>
 
-        <dl>
-            <br />
-            <dd>
-                <i class="fa fa-barcode" title="Code du cours"></i>
-                @Model.Code
-            </dd>
-            <dd>
-                <i class="fa fa-book" title="Titre"></i>
-                @Model.Title
-            </dd>
-            <dd>
-                <i class="fa fa-calendar-days" title="Session"></i>
-                Session @Model.Session
-            </dd>
-        </dl>
-    </details>
+        <div style="font-size:1.3em; font-weight:500; margin-top:0.9px;">
+            Session @Model.Session
+        </div>
+
+        <div style="font-weight:700; font-size:1.2em; margin-top:10px;">
+            @Model.Title
+        </div>
+    </div>
 
     <hr />
-    <h3>Inscriptions</h3>
 
-    <details id="course_inscriptions_@Model.Code">
-        <summary>Étudiants inscrits</summary>
-        <div style="padding:8px;">
+    <h5>Étudiants inscrits</h5>
+
+    <details id="course_inscriptions_@Model.Code" open>
+        <summary>Cohorte 2026</summary>
+
+        <div style="padding-left:16px;">
             Aucun étudiant inscrit pour le moment.
         </div>
+    </details>
+
+    <details id="course_inscriptions_2025_@Model.Code">
+        <summary>Cohorte 2025</summary>
+    </details>
+
+    <details id="course_inscriptions_2024_@Model.Code">
+        <summary>Cohorte 2024</summary>
+    </details>
+
+    <details id="course_inscriptions_2023_@Model.Code">
+        <summary>Cohorte 2023</summary>
+    </details>
+
+    <details id="course_inscriptions_2022_@Model.Code">
+        <summary>Cohorte 2022</summary>
     </details>
 }
 else

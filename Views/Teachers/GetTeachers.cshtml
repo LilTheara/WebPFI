@@ -1,0 +1,17 @@
+@model IEnumerable<Registrar.Models.Teacher>
+
+@if (Model != null && Model.Count() != 0)
+{
+    foreach (var teacher in Model)
+    {
+        <a href="@Url.Action("Details", "Teachers", new { id = teacher.Id }, null)" class="TeacherListLayout">
+            <img src="@teacher.Avatar" style="width:36px; height:36px; border-radius:50%; object-fit:cover;" />
+            <span class="teacherCode">@teacher.Code</span>
+            <span class="teacherName">@teacher.LastName @teacher.FirstName</span>
+        </a>
+    }
+}
+else
+{
+    <h3>Aucun résultat</h3>
+}

@@ -1,0 +1,22 @@
+@model Registrar.Models.Teacher
+
+@if (Model != null)
+{
+    <details id="teacher_details_@Model.Code" open>
+        <summary>
+            <img src="@Model.Avatar" style="width:28px; height:28px; border-radius:50%; object-fit:cover;" />
+            <strong>@Model.LastName @Model.FirstName</strong>
+        </summary>
+
+        <dl>
+            <br />
+            <dd>@Model.Code</dd>
+            <dd>@Model.Phone</dd>
+            <dd>Depuis le @Model.StartDate.ToString("dd MMMM yyyy")</dd>
+        </dl>
+    </details>
+}
+else
+{
+    <h2 style="color:red">Ce prof a été effacé...</h2>
+}
