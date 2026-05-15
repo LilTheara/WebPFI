@@ -54,8 +54,8 @@
 	</details>
 	@if(ViewBag.Edit == true)
 	{
-		var courses = Model.Registrations.Where(c => c.isNextSession);
-		var allCourses = Model.Registrations.Where(c => c.isNextSession);
+		var courses = Model.CoursesSelectList;
+		var allCourses = DAL.DB.Courses.ToSelectList();
 		<details id="student_edits_inscriptions_@Model.Code">
 			<summary>Inscriptions : @NextSession.Caption</summary>
 			<fieldset>
