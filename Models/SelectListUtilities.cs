@@ -5,7 +5,7 @@ namespace Models
 {
     public class SelectListUtilities<T>
     {
-        public static SelectList Convert(IEnumerable<T> collection, string targetField = "Name", string defaultText = "")
+        public static SelectList Convert(IEnumerable<T> collection, string targetField = "Title", string defaultText = "")
         {
             List<SelectListItem> items = new List<SelectListItem>();
             if (typeof(T).Name == "String")
@@ -21,13 +21,13 @@ namespace Models
             {
                 foreach (T item in collection)
                 {
-                    items.Add(
-                        new SelectListItem()
-                        {
-                            Value = typeof(T).GetProperty("Id").GetValue(item, null).ToString(),
-                            Text = typeof(T).GetProperty(targetField).GetValue(item, null).ToString()
-                        });
-                }
+					items.Add(
+					   new SelectListItem()
+					   {
+						   Value = typeof(T).GetProperty("Id").GetValue(item, null).ToString(),
+						   Text = typeof(T).GetProperty(targetField).GetValue(item, null).ToString()
+					   });
+				}
             }
             if (defaultText != "")
                 items.Insert(0, new SelectListItem { Value = "0", Text = defaultText });

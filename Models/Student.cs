@@ -41,14 +41,17 @@ namespace Models
 			get
 			{
 				var courses = new List<Course>();
-				foreach (var registration in Registrations.OrderBy(r => r.Course.Code))
+				foreach (var registration in NextSessionRegistrations.OrderBy(r => r.Course.Code))
 				{
 					courses.Add(registration.Course);
 				}
 				return courses;
 			}
 		}
-		[JsonIgnore] public SelectList CoursesSelectList => SelectListUtilities<Course>.Convert(Courses, "Caption");
+		public SelectList CoursesToSeleclist()
+		{
+			return SelectListUtilities<Course>.Convert(Courses);
+		}
 		[JsonIgnore]
 		public SelectList NextSessionCoursesToSelectList => SelectListUtilities<Course>.Convert(NextSessionCourses, "Caption");
 		public override bool IsValid()
