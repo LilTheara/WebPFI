@@ -11,7 +11,7 @@ using Registrar.Models;
 namespace Models
 {
 	public class Student : Record
-	{
+	{	
 		public string Code { get; set; }
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
@@ -20,7 +20,7 @@ namespace Models
 		public string Phone { get; set; }
 		[JsonIgnore] public string FullName => LastName + " " + FirstName;
 		[JsonIgnore] public string Caption => Code + " " + LastName + " " + FirstName;
-		[JsonIgnore] public int Year => int.Parse(Code.Substring(0, 4));
+		[JsonIgnore] public int Year => !string.IsNullOrEmpty(Code) ? int.Parse(Code.Substring(0, 4)) : 0;
 		[JsonIgnore] public List<Registration> Registrations => DB.Registrations.ToList().Where(r => r.StudentId == Id).ToList();
 		[JsonIgnore] public List<Registration> NextSessionRegistrations => DB.Registrations.ToList().Where(r => r.StudentId == Id && r.isNextSession).ToList();
 		[JsonIgnore]
@@ -75,6 +75,18 @@ namespace Models
 			if(selectedCoursesId != null)
 				foreach (int courseId in selectedCoursesId)
 					DB.Registrations.Add(new Registration { StudentId = Id, CourseId = courseId });
+		}
+		public static string GenerateCode()
+		{
+			Random rdn = new Random();
+			string tempCode = "0";
+			int num;
+			do
+			{
+				num = rdn.Next(000000, 1000000);
+				tempCode = NextSession.Year.ToString() + num.ToString();
+			} while (DB.Students.ToList().Any(c => c.Code == tempCode));
+			return tempCode;
 		}
 	}
 }
