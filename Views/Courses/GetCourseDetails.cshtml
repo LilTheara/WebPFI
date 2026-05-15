@@ -3,46 +3,40 @@
 @if (Model != null)
 {
     <div>
-        <div style="font-size:1.3em; font-weight:500;">
-            @Model.Code
-        </div>
-
-        <div style="font-size:1.3em; font-weight:500; margin-top:0.9px;">
-            Session @Model.Session
-        </div>
-
-        <div style="font-weight:700; font-size:1.2em; margin-top:10px;">
-            @Model.Title
-        </div>
+        <div style="font-size:1.3em; font-weight:bold;">@Model.Code</div>
+        <div style="font-size:1.1em; font-weight:bold;">Session @Model.Session</div>
+        <div style="font-weight:900; margin-top:6px;">@Model.Title</div>
     </div>
 
     <hr />
 
     <h5>Étudiants inscrits</h5>
 
-    <details id="course_inscriptions_@Model.Code" open>
-        <summary>Cohorte 2026</summary>
+    var yearsList = Model.Students.Select(s => s.Year).Distinct().OrderByDescending(y => y).ToList();
 
-        <div style="padding-left:16px;">
-            Aucun étudiant inscrit pour le moment.
-        </div>
-    </details>
+    foreach (int year in yearsList)
+    {
+        var students = Model.Students.Where(s => s.Year == year).OrderBy(s => s.LastName).ThenBy(s => s.FirstName).ToList();
 
-    <details id="course_inscriptions_2025_@Model.Code">
-        <summary>Cohorte 2025</summary>
-    </details>
+        if (students.Count() > 0)
+        {
+            <details id="course_students_details_@year">
+                <summary>Cohorte @year</summary>
 
-    <details id="course_inscriptions_2024_@Model.Code">
-        <summary>Cohorte 2024</summary>
-    </details>
-
-    <details id="course_inscriptions_2023_@Model.Code">
-        <summary>Cohorte 2023</summary>
-    </details>
-
-    <details id="course_inscriptions_2022_@Model.Code">
-        <summary>Cohorte 2022</summary>
-    </details>
+                @foreach (var student in students)
+                {
+                    <div class="StudentListLayout">
+                        <a href="/Students/Details/@student.Id">
+                            <div style="display:flex">
+                                <span class="studentCode">@student.Code</span>
+                                <div class="studentName">@student.LastName @student.FirstName</div>
+                            </div>
+                        </a>
+                    </div>
+                }
+            </details>
+        }
+    }
 }
 else
 {
