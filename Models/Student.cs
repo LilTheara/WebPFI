@@ -24,33 +24,33 @@ namespace Models
 		[JsonIgnore] public List<Registration> Registrations => DB.Registrations.ToList().Where(r => r.StudentId == Id).ToList();
 		[JsonIgnore] public List<Registration> NextSessionRegistrations => DB.Registrations.ToList().Where(r => r.StudentId == Id && r.isNextSession).ToList();
 		[JsonIgnore]
-		public List<Student> Students
+		public List<Course> Courses
 		{
 			get {
-				var students = new List<Student>();
-				foreach (var registration in Registrations.OrderBy(r => r.Student.Code))
+				var courses = new List<Course>();
+				foreach (var registration in Registrations.OrderBy(r => r.Course.Code))
 				{
-					students.Add(registration.Student);
+					courses.Add(registration.Course);
 				}
-				return students;
+				return courses;
 			}
 		}
 		[JsonIgnore]
-		public List<Student> NextSessionStudents
+		public List<Course> NextSessionCourses
 		{
 			get
 			{
-				var students = new List<Student>();
-				foreach (var registration in NextSessionRegistrations.OrderBy(r => r.Student.Code))
+				var courses = new List<Course>();
+				foreach (var registration in Registrations.OrderBy(r => r.Course.Code))
 				{
-					students.Add(registration.Student);
+					courses.Add(registration.Course);
 				}
-				return students;
+				return courses;
 			}
 		}
-		[JsonIgnore] public SelectList StudentsSelectList => SelectListUtilities<Student>.Convert(Students, "Caption");
+		[JsonIgnore] public SelectList CoursesSelectList => SelectListUtilities<Course>.Convert(Courses, "Caption");
 		[JsonIgnore]
-		public SelectList NextSessionStudentsToSelectList => SelectListUtilities<Student>.Convert(NextSessionStudents, "Caption");
+		public SelectList NextSessionCoursesToSelectList => SelectListUtilities<Course>.Convert(NextSessionCourses, "Caption");
 		public override bool IsValid()
 		{
 			if (!HasRequiredLength(FirstName, 1)) return false;

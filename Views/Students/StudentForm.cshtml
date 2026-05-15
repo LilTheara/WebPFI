@@ -52,7 +52,20 @@
 				   value="@Model.Phone" />
 		</fieldset>
 	</details>
-	
+	@if(ViewBag.Edit == true)
+	{
+		var courses = Model.CoursesSelectList;
+		var allCourses = DAL.DB.Courses.ToSelectList();
+		<details id="student_edits_inscriptions_@Model.Code">
+			<summary>Inscriptions : @NextSession.Caption</summary>
+			<fieldset>
+				<div class="legend">
+					@Html.Label("Acteurs")
+				</div>
+				@Helper.SelectionLists("SelectedActors", courses, allCourses)
+			</fieldset>
+		</details>
+	}
 	<input id="submit" type="submit" value="Enregistrer" class="btn btn-primary" style="display:none">
 
 }

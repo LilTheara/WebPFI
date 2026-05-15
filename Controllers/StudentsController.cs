@@ -154,6 +154,7 @@ namespace Controllers
 			DB.Events.Add("Illegal Create Student");
 			return Redirect("/Accounts/Login?message=Erreur de creation de Student!&success=false");
 		}
+		[UserAccess(Access.Write)]
 		public ActionResult Edit()
 		{
 			int id = Session["CurrentStudentId"] != null ? (int)Session["CurrentStudentId"] : 0;
@@ -162,6 +163,7 @@ namespace Controllers
 				Student student = DB.Students.Get(id);
 				if (student != null)
 				{
+					ViewBag.Edit = true;
 					if (Models.User.ConnectedUser.Access >= Access.Write || Models.User.ConnectedUser.IsAdmin)
 						return View(student);
 				}
