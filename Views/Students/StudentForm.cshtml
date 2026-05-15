@@ -59,9 +59,12 @@
 	{
 		var courses = Model.CoursesToSeleclist();
 		var allCourses = DAL.DB.Courses.ToSelectList();
-		<fieldset>
-			@Helper.SelectionLists("SelectedCourses", courses, allCourses)
-		</fieldset>
+		<details style="display: block; width: 100%;">
+		<summary>Inscriptions : Session @NextSession.Caption</summary>
+			<fieldset>
+				@Helper.SelectionLists("SelectedCourses", courses, allCourses)
+			</fieldset>
+		</details>
 	}
 		<input id="submit" type="submit" value="Enregistrer" class="btn btn-primary" style="display:none">
 

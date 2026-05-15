@@ -8,15 +8,19 @@ namespace Models
 {
 	public class RegistrationsRepository : Repository<Registration>
 	{
-		public void DeleteByCourseId(int courseId)
+		public bool Delete(int studentId, int courseId)
 		{
-			List<Registration> list = ToList().Where(l => l.CourseId == courseId).ToList().Copy();
-			list.ForEach(l => Delete(l.Id));
+			Registration registration = DB.Registrations.ToList().Where(c => c.StudentId == studentId && c.CourseId == courseId).FirstOrDefault();
+			if (registration != null)
+			{
+				return base.Delete(registration.Id);
+			}
+			return false;
 		}
-		public void DeleteByStudentId(int studentId)
+		public int Add(int studentId, int courseId)
 		{
-			List<Registration> list = ToList().Where(l => l.StudentId == studentId).ToList().Copy();
-			list.ForEach(l => Delete(l.Id));
+			Registration registration = new Registration { StudentId = studentId, CourseId = courseId };
+			return base.Add(registration);
 		}
 		public List<int> Years()
 		{

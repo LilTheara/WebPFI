@@ -28,7 +28,7 @@ namespace Registrar
 						"~/Content/jqui-custom-datepicker.css",
 						"~/Content/menu.css",
 						"~/Content/popup.css",
-						"~/Content/Selection.css",
+						"~/Content/Selections.css",
                         "~/Content/site.css",
 						"~/Content/Students.css",
                         "~/Content/Teachers.css"));

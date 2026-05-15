@@ -163,7 +163,6 @@ namespace Controllers
 				Student student = DB.Students.Get(id);
 				if (student != null)
 				{
-					ViewBag.Edit = true;
 					if (Models.User.ConnectedUser.Access >= Access.Write || Models.User.ConnectedUser.IsAdmin)
 						return View(student);
 				}
@@ -174,7 +173,7 @@ namespace Controllers
 		[UserAccess(Access.Write)]
 		[HttpPost]
 		[ValidateAntiForgeryToken()]
-		public ActionResult Edit(Student student, string sharedCB = "off")
+		public ActionResult Edit(Student student, List<int> SelectedCourses)
 		{
 			int id = Session["CurrentStudentId"] != null ? (int)Session["CurrentStudentId"] : 0;
 
@@ -185,7 +184,7 @@ namespace Controllers
 
 				if (student.IsValid())
 				{
-					DB.Students.Update(student);
+					DB.Students.Update(student, SelectedCourses);
 					return RedirectToAction("Details/" + id);
 				}
 			}
