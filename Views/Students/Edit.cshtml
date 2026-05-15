@@ -6,7 +6,10 @@
 }
 
 @section Scripts {  <!-- Cette section ne doit pas être placée dans une vue partielle -->
-	<script>$(() => {
+	<script src="~/Scripts/selections.js"></script>
+	<script>
+	$(() => {
+			initUI();
 
             initFormValidation();
             addConflictValidation("/Students/CheckConflict", 'Email' /* field unicity check */, 'submit' /* form submit button Id */);
