@@ -27,7 +27,7 @@ namespace Models
 		}
 		private void UpdateRegistration(Student student, List<int> coursesId)
 		{
-			DeleteRegistrations(student);
+			student.DeleteNextSessionRegistrations();
 			if (coursesId != null && coursesId.Count > 0)
 			{
 				foreach (var courseId in coursesId)

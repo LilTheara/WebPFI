@@ -9,6 +9,7 @@
 	@Html.AntiForgeryToken() <!-- Injection de jeton anti contrefaçon de formulaire -->
 	<details id="student_edits_@Model.Code">
 		<summary>Informations - [@Model.Code]</summary>
+		@Html.HiddenFor(model => model.Code)
 		<fieldset>
 			<legend>Prénom</legend>
 			<input id="FirstName"
@@ -60,12 +61,12 @@
 		var courses = Model.CoursesToSeleclist();
 		var allCourses = DAL.DB.Courses.ToSelectList();
 		<details style="display: block; width: 100%;">
-		<summary>Inscriptions : Session @NextSession.Caption</summary>
+			<summary>Inscriptions : Session @NextSession.Caption</summary>
 			<fieldset>
 				@Helper.SelectionLists("SelectedCourses", courses, allCourses)
 			</fieldset>
 		</details>
 	}
-		<input id="submit" type="submit" value="Enregistrer" class="btn btn-primary" style="display:none">
+	<input id="submit" type="submit" value="Enregistrer" class="btn btn-primary" style="display:none">
 
-	}
+}
