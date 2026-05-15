@@ -50,7 +50,7 @@ namespace Models
 		}
 		public SelectList CoursesToSeleclist()
 		{
-			return SelectListUtilities<Course>.Convert(Courses);
+			return SelectListUtilities<Course>.Convert(Courses, "Caption");
 		}
 		[JsonIgnore]
 		public SelectList NextSessionCoursesToSelectList => SelectListUtilities<Course>.Convert(NextSessionCourses, "Caption");
@@ -59,8 +59,6 @@ namespace Models
 			if (!HasRequiredLength(FirstName, 1)) return false;
 			if (!HasRequiredLength(LastName, 1)) return false;
 			if (!IsEmail(Email)) return false;
-			if(!IsPhone(Phone)) return false;
-			if (DB.Students.ToList().Where(m => m.Code == Code && m.Id != Id).Any()) return false;
 			return true;
 		}
 		public void DeleteAllRegistrations(){

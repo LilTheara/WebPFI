@@ -5,7 +5,7 @@ namespace Models
 {
     public class SelectListUtilities<T>
     {
-        public static SelectList Convert(IEnumerable<T> collection, string targetField = "Title", string defaultText = "")
+        public static SelectList Convert(IEnumerable<T> collection, string targetField = "Caption", string defaultText = "")
         {
             List<SelectListItem> items = new List<SelectListItem>();
             if (typeof(T).Name == "String")

@@ -14,7 +14,7 @@ namespace Models
         public int Session { get; set; }
 
         [JsonIgnore]
-        public string Caption => Code + " " + Title;
+        public string Caption => "[" + Session + "] " + Code + " " + Title;
 
         [JsonIgnore]
         public List<Registration> Registrations =>
@@ -65,7 +65,6 @@ namespace Models
             if (!HasRequiredLength(Code, 1)) return false;
             if (!HasRequiredLength(Title, 1)) return false;
             if (Session < 1 || Session > 6) return false;
-            if (DB.Courses.ToList().Where(c => c.Code == Code && c.Id != Id).Any()) return false;
             return true;
         }
 
