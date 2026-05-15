@@ -280,6 +280,8 @@
     <Content Include="Views\Teachers\Create.cshtml" />
     <Content Include="Views\Teachers\Edit.cshtml" />
     <Content Include="Views\Teachers\TeacherForm.cshtml" />
+    <Content Include="Views\Teachers\GetTeacherDetails.cshtml" />
+    <None Include="Properties\PublishProfiles\Registrar202477720 - Web Deploy.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -80,8 +80,14 @@ namespace Controllers
 
             return RedirectToAction("List");
         }
-
-        public ActionResult GetTeacherDetails(bool forceRefresh = false)
+		public JsonResult CheckConflict(string Email)
+		{
+			int id = Session["CurrentTeacherId"] != null ? (int)Session["CurrentTeacherId"] : 0;
+			// Response json value true if name is used in other Medias than the current Media
+			return Json(DB.Teachers.ToList().Where(c => c.Email == Email && c.Id != id).Any(),
+						JsonRequestBehavior.AllowGet /* must have for CORS verification by client browser */);
+		}
+		public ActionResult GetTeacherDetails(bool forceRefresh = false)
         {
             try
             {
